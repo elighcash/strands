@@ -1,0 +1,212 @@
+//width=970px total
+
+!blueprint_grid_columns = 24
+
+@import compass/reset.sass
+@import blueprint/modules/grid.sass
+@import blueprint/modules/scaffolding.sass
+
++blueprint-grid
++blueprint-scaffolding
+
+!link_color = #C41230
+!background_color = #FFFFFF
+!title_color = #191919
+!dark_red = #C41230
+
+.spacer-1
+    +column(1)
+.spacer-2
+    +column(2)
+.spacer-3
+    +column(3)
+.spacer-4
+    +column(4)
+.spacer-5
+    +column(5)
+.spacer-6
+    +column(6)
+.spacer-7
+    +column(7)
+.spacer-8
+    +column(8)
+.spacer-9
+    +column(9)
+.spacer-10
+    +column(10)
+.spacer-11
+    +column(11)
+.spacer-12
+    +column(12)
+.spacer-14
+    +column(14)
+.spacer-15
+    +column(15)
+.spacer-16
+    +column(16)
+
+h1
+    :font-size 2em
+    :font-weight bold
+    :font-family Corbel, 'Trebuchet MS', sans-serif
+    :color #191919
+    :padding-top 0.4em
+    :padding-bottom 0.2em
+h2
+    :font-size 2em
+    :font-weight normal
+    :font-family Corbel, 'Trebuchet MS', sans-serif
+    :color = #191919
+    :padding-left 0.4em
+    :padding-bottom 0
+h3
+    :font-size 1em
+    :font-weight bold
+    :color #191919
+    :padding-top .1em
+    :padding-bottom .2em
+
+strong
+    :font-weight bold
+
+p
+    :display block
+    :text-align left
+    :font-size 1.1em
+    :color #191919
+    :line-height 130%
+    :margin-bottom 1em
+
+ol
+    :padding-left 15px
+    :color #191919
+    :font-size 1.1em
+    :font-family 'Trebuchet MS'
+
+li
+    :padding-top .25em
+    :padding-bottom .25em
+
+
+
+//site structure
+html
+    :height 100%
+body
+    :margin 0
+    :height 100%
+    :font normal 14px/20px Constantia, Times, serif
+    :color #444
+    :background-color = !background_color
+    :text-align left
+    a
+        :outline 0
+        :text-decoration none
+        :color = !link_color
+        &:hover
+            :color = !background_color
+            :background-color = !link_color
+
+
+#header
+    +container
+    :display block
+    :background-color = !background_color
+    :border-bottom 1px solid
+    :font-size 1.5em
+    :font-weight normal
+    :color #191919
+    :padding-bottom .25em
+
+#banner
+    :padding 0
+    :height 140px
+    :border-bottom 1px solid
+    :margin-bottom .25em
+
+#navigation
+    +column(12)
+    :font-family 'Trebuchet MS', sans-serif
+
+#notification
+    +column(12,true)
+    :text-align right
+    
+
+#body-container
+    :min-height 100%
+    
+#content
+    +container
+    :padding-top .75em
+    :padding-bottom .75em
+    :padding-left 0
+    :padding-right 0
+    :margin-bottom 2em
+    #push-bottom
+        :height 3.8em
+        :padding 1em
+
+.content-header
+    +container
+    :background-color = !background_color
+    :font-family 'Trebuchet MS', sans-serif
+    :color = !title_color
+    :padding-top .5em
+    :padding-bottom .15em
+    :padding-left 0
+    :font-size 1.4em
+
+.content-title
+    :font-weight normal
+    :color = !title_color
+    :padding-left 0
+    :padding-bottom 0
+
+.content-header-left
+    +column(12)
+    :text-align left
+
+.content-header-right
+    +column(12, true)
+    :text-align right
+
+.content-container
+    +column(24, true)
+    :padding-top 1em
+
+#footer
+    +container
+    :display block
+    :background-color = !dark_red
+    :text-align left
+    :padding 0
+    :font normal 14px/18px 'Trebuchet MS', sans-serif
+    :color = !background_color
+    :border 0px solid
+    :-moz-border-radius 8px 8px 0 0
+    :-webkit-border-radius 8px
+    :-webkit-border-bottom-left-radius 0
+    :-webkit-border-bottom-right-radius 0
+    :height 3em
+    :margin-top -3em
+    #footer-legal
+        +column(11)
+        :text-align left
+        :padding-left 1em
+        :padding-top .35em
+        :padding-right 0
+    #footer-badge
+        +column(12, true)
+        :font-style italic
+        :text-align right
+        :padding-top .6em
+        :padding-right 1.5em
+    a
+        :outline 0
+        :text-decoration none
+        :font normal 14px/18px 'Trebuchet MS', sans-serif
+        :color = !link_color
+        &:hover
+            :color = !background_color
+            :background-color = !link_color

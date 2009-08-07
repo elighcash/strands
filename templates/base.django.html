@@ -1,0 +1,39 @@
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <title>STRANDS demo site &#8226; {% block head_title %}{% endblock %}</title>
+
+        <link rel="stylesheet" href="{{ MEDIA_URL }}css/stylesheets/style.css" type="text/css" media="screen, projection" />
+        <link rel="stylesheet" href="{{ MEDIA_URL }}css/stylesheets/print.css" type="text/css" media="print" />
+        {% block extra_head %}{% endblock %}
+    </head>
+    <body>
+        <div id="body-container">
+            <div id="header">
+                <div id="banner">
+                    <img src="{{ MEDIA_URL }}images/strands_header.png" alt="STRANDS"/>
+                </div>
+                <div id="navigation">
+                    <a href="/">main</a> &#8226; <a href="/strands/">strands</a> &#8226; <a href="/about/">about</a>
+                </div>
+                <div id="notification">
+                    software demonstration site
+                </div>
+            </div>
+            <div id="content">
+                {% block body %}{% endblock %}
+                <div id="push-bottom">&nbsp;</div>
+            </div>
+        </div>
+        <div id="footer">
+            <div id="footer-legal">
+                &copy; notice and such.
+            </div>
+            <div id="footer-badge">
+                <a class="badge" href="http://typeish.net/strands/"><img src="{{ MEDIA_URL }}images/strands_badge.png" alt="STRANDS" /></a>
+            </div>
+        </div>
+        {# Start Google Analytics Script #}
+        {# End Google Analytics Script #}
+    </body>
+</html>

@@ -1,0 +1,38 @@
+{% extends "base.django.html" %}
+
+{% block head_title %}Strand&nbsp;&#8226;&nbsp;{{ strand_a.name }}{% endblock %}
+
+{% block body %}
+
+    <div class="content-header">
+        <span class="content-title">{{ strand_a.name|capfirst }} as strand A</span>
+    </div>
+    <div class="content-container">
+        {% if knots_a %}
+        <ul>
+            {% for knot in knots_a %}
+            <li>&#8226; <a href="/knot/{{ knot.slug }}/"><strong>{{ knot.title }}</strong></a> &#47; B: <a href="/strands/{{ knot.strand_b.name }}">{{ knot.strand_b }}</a> &#47; <a href="/author/{{ knot.author }}/">{% if knot.author.first_name %}{{ knot.author.first_name|capfirst }}{% else %}{{ knot.author }}{% endif %}</a> &#47; {{ knot.date|date:"j M Y" }}</li>
+            {% endfor %}
+        </ul>
+        {% else %}
+        No knots with {{ strand_a.name }} as strand A.
+        {% endif %}
+    </div>
+
+
+    <div class="content-header">
+        <span class="content-title">{{ strand_a.name|capfirst }} as strand B</span>
+    </div>
+    <div class="content-container">
+        {% if knots_b %}
+        <ul>
+            {% for knot in knots_b %}
+            <li>&#8226; <a href="/knot/{{ knot.slug }}/"><strong>{{ knot.title }}</strong></a> &#47; A: <a href="/strands/{{ knot.strand_a.name }}">{{ knot.strand_b }}</a> &#47; <a href="/author/{{ knot.author }}/">{% if knot.author.first_name %}{{ knot.author.first_name|capfirst }}{% else %}{{ knot.author }}{% endif %}</a> &#47; {{ knot.date|date:"j M Y" }}</li>
+            {% endfor %}
+        </ul>
+        {% else %}
+        No knots with {{ strand_a.name }} as strand B.
+        {% endif %}
+    </div>
+
+{% endblock %}

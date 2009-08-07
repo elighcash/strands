@@ -1,0 +1,16 @@
+{% extends "base.django.html" %}
+
+{% block head_title %}Author&nbsp;&#8226;&nbsp;{{ author.first_name|capfirst }}{% endblock %}
+
+{% block body %}
+    <div class="content-header">
+        <span class="content-title">{%if author.first_name %}{{ author.first_name|capfirst }}{%if author.last_name %} {{ author.last_name|capfirst }}{% endif %}{% else %}{{ author }}{% endif %}'s Knots</span>
+    </div>
+    <div class="content-container">
+        <ul>
+            {% for knot in knots %}
+            <li>&#8226; <a href="/knot/{{ knot.slug }}/"><strong>{{ knot.title }}</strong></a> &#47; A: <a href="/strands/{{ knot.strand_a.name }}">{{ knot.strand_a }}</a> &#47; B: <a href="/strands/{{ knot.strand_b.name }}">{{ knot.strand_b }}</a> &#47; <a href="/author/{{ knot.author }}/">{% if knot.author.first_name %}{{ knot.author.first_name|capfirst }}{% else %}{{ knot.author }}{% endif %}</a> &#47; {{ knot.date|date:"j M Y" }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+{% endblock %}

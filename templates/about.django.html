@@ -1,0 +1,72 @@
+{% extends "base.django.html" %}
+
+{% block head_title %}About{% endblock %}
+
+{% block body %}
+<div class="content-header">
+    <span class="content-title">About STRANDS</span>
+</div>
+<div class="content-container">
+    <p>
+        STRANDS is a simple Web content management system made by <a href="http://typeish.net/">type(ish)</a>.
+        The focus is on a unique way of visualizing content, and to a lesser extent typography. Everything within
+        the blog or journal is organized in the tapestry. Instead of tags, there are strands, essentially topics.
+        Each post, or knot, is at the intersection of two strands, the primary or A strand and the secondary or B
+        strand. The use of only two strands for each knot is intended to focus the topics of the content. Instead
+        of creating a flood of tags, the writer must decide what the post is specifically about, within at most
+        two categories. This encourages constrained and concise writing.
+    </p>
+    <p>
+        Visit the <a href="http://typeish.net/strands/">STRANDS project page</a> for more information, or
+        contact us at <a href="mailto:contact&#64;typeish.net">contact&#64;typeish.net</a>.
+    </p>
+</div>
+
+<div class="content-header">
+    <span class="content-title">Using STRANDS</span>
+</div>
+<div class="content-container">
+    <p>
+        Add and manage content and users through the admin interface. By default, this is located at
+        <a href="/admin">http://hostname/admin/</a>. Log in using the user you created when syncing the
+        database.
+    </p>
+    <p>
+        The <a href="/">main page</a> by default shows the three latest knots. All strands can be viewed
+        on the <a href="/strands/">strands page</a>. From there individual knots can be viewed. Also, knots
+        can be viewed by author on the author's page (http://hostname/author/username).
+    </p>
+    <p>
+        The latest development code of STRANDS can be found at the project's
+        <a href="http://github.com/typeish/STRANDS/">Github repository</a>.
+    </p>
+</div>
+
+
+<div class="content-header">
+    <span class="content-title">License</span>
+</div>
+<div class="content-container">
+    <p>
+        STRANDS is Copyright &copy; 2009 Typeish and is available under The MIT License.
+    </p>
+    <p>
+        Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
+        associated documentation files (the "Software"), to deal in the Software without restriction,
+        including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense,
+        and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so,
+        subject to the following conditions:
+    </p>
+    <p>
+        The above copyright notice and this permission notice shall be included in all copies or substantial
+        portions of the Software.
+    </p>
+    <p>
+        THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT
+        LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+        IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
+        WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
+        SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+    </p>
+</div>
+{% endblock %}

@@ -1,0 +1,16 @@
+{% extends "base.django.html" %}
+
+{% block head_title %}Tapestry{% endblock %}
+
+{% block body %}
+    <div class="content-header">
+        <span class="content-title">All Strands</span>
+    </div>
+    <div class="content-container">
+        <ul>
+        {% for strand in strands %}
+            <li>&#8226; <strong><a href="/strands/{{ strand.name }}/">{{ strand }}</a></strong> &#47; {{ strand.strand_a.count }} as strand A &#47; {{ strand.strand_b.count }} as strand B</li>
+        {% endfor %}
+        </ul>
+    </div>
+{% endblock %}
