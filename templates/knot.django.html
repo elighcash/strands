@@ -4,7 +4,7 @@
 
 {% block body %}
     <div class="content-header">
-        <div class="content-header-left"><span class="content-title">{{ knot.title|capfirst }}</span> &#8226; <a href="/strands/{{ knot.strand_a.name }}/">{{ knot.strand_a }}</a> &#8226; <a href="/strands/{{ knot.strand_b.name }}/">{{ knot.strand_b }}</a></div>
+        <div class="content-header-left"><span class="content-title">{{ knot.title|capfirst }}</span> &#8226; <a href="/strands/{{ knot.strand_a.slug }}/">{{ knot.strand_a }}</a> &#8226; <a href="/strands/{{ knot.strand_b.slug }}/">{{ knot.strand_b }}</a></div>
         <div class="content-header-right"><a href="/author/{{ knot.author }}">{% if knot.author.first_name %}{{ knot.author.first_name|capfirst }}{% else %}{{ knot.author }}{% endif %}</a> &#8226; {{ knot.date|date:"j M Y" }}</div>
     </div>
     

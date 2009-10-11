@@ -9,7 +9,7 @@
     <div class="content-container">
         <ul>
         {% for strand in strands %}
-            <li>&#8226; <strong><a href="/strands/{{ strand.name }}/">{{ strand }}</a></strong> &#47; {{ strand.strand_a.count }} as strand A &#47; {{ strand.strand_b.count }} as strand B</li>
+            <li>&#8226; <strong><a href="/strands/{{ strand.slug }}/">{{ strand }}</a></strong></li>
         {% endfor %}
         </ul>
     </div>
