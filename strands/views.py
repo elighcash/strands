@@ -1,13 +1,9 @@
 from django.shortcuts import render_to_response, get_object_or_404
 from django.template import RequestContext
-from django.http import  HttpResponseRedirect
+from django.http import  HttpResponseRedirect, Http404
 from django.contrib.auth.models import User
 from django.conf import settings
 from models import *
-
-#The following two methods, tapestry and display_strand, will eventually become
-#a single view that controls the tapestry visualization that allows for display
-#and organization of all knots.
 
 #display all knots
 def tapestry(request):
@@ -18,11 +14,18 @@ def tapestry(request):
         }, context_instance=RequestContext(request))
 
 #display all knots with these a and b strands
-#currently, intersecting strands (specifying both a and b) is not supported
-def display_strand(request, strand_a_name="$none", strand_b_name="$none"):
-    strand_a = Strand.objects.get(name = strand_a_name)
-    knots_a = strand_a.strand_a.all()
-    knots_b = strand_a.strand_b.all()
+def display_strand(request, strand_a_slug="$none", strand_b_slug="$none", ordera="-date", orderb="title"):
+    try:
+        strand_a = Strand.objects.get(slug = strand_a_slug)
+    except Strand.DoesNotExist:
+        raise Http404
+    knots_a = strand_a.strand_a.filter(published = True).order_by(ordera)
+    knots_b = strand_a.strand_b.filter(published = True).order_by(orderb)
+    #if strand_b_id != "$none":
+    #    strand_b = Strand.objects.get(name = strand_b_id)
+    #    knots = knots.filter(strand_b = strand_b_id)
+    #else:
+    #    strand_b = "$none"
     template_name = "strand.django.html"
     return render_to_response(template_name, {
         "knots_a": knots_a,
@@ -33,26 +36,71 @@ def display_strand(request, strand_a_name="$none", strand_b_name="$none"):
 
 #display this particular knot
 def display_knot(request, knot_slug):
-    knot = Knot.objects.get(slug = knot_slug)
+    try:
+        knot = Knot.objects.get(slug = knot_slug, published = True)
+    except Knot.DoesNotExist:
+        raise Http404
     template_name = "knot.django.html"
     return render_to_response(template_name, {
         "knot": knot,
         }, context_instance=RequestContext(request))
 
-#display all knots written by author
-def display_by_author(request, author_username):
-    author = User.objects.get(username = author_username)
-    knots = author.knot_set.all()
+def display_by_author(request, author_username, order="title"):
+    try:
+        author = User.objects.get(username = author_username)
+    except User.DoesNotExist:
+        raise Http404
+    knots = author.knot_set.filter(published = True).order_by(order)
     template_name = "author.django.html"
+    oti = ""
+    osa = ""
+    osb = ""
+    oda = ""
+    if order == "title":
+        oti = "-"
+    if order == "strand_a":
+        osa = "-"
+    if order == "strand_b":
+        osb = "-"
+    if order == "date":
+        oda = "-"
     return render_to_response(template_name, {
         "author": author,
         "knots": knots,
+        "oti": oti,
+        "osa": osa,
+        "osb": osb,
+        "oda": oda,
         }, context_instance=RequestContext(request))
 
-#display the three most recent posts
+#def display_by_date(request, date_slug, order="title"):
+#    date = User.objects.get(username = author_username)
+#    knots = author.knot_set.all().order_by(order)
+#    template_name = "author.django.html"
+#    oti = ""
+#    osa = ""
+#    osb = ""
+#    oda = ""
+#    if order == "title":
+#        oti = "-"
+#    if order == "strand_a":
+#        osa = "-"
+#    if order == "strand_b":
+#        osb = "-"
+#    if order == "date":
+#        oda = "-"
+#    return render_to_response(template_name, {
+#        "author": author,
+#        "knots": knots,
+#        "oti": oti,
+#        "osa": osa,
+#        "osb": osb,
+#        "oda": oda,
+#        }, context_instance=RequestContext(request))
+
 def index(request):
     template_name = "index.django.html"
-    latest_knots = Knot.objects.all().order_by("-id")[:3]
+    latest_knots = Knot.objects.filter(published = True).order_by("-id")[:3]
     return render_to_response(template_name, {
         "latest_knots": latest_knots,
         }, context_instance=RequestContext(request))
