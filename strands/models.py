@@ -10,9 +10,7 @@ class Strand(models.Model):
 
     def __unicode__(self):
         return u'%s' % self.name
-    
-    class Admin:
-        pass
+
 
 # Knots are the core content structure of the CMS. Each knot has an author and two strands associated
 # with it. They also contain a title, slug, date, and body.
@@ -32,9 +30,6 @@ class Knot(models.Model):
 
     def __unicode__(self):
         return u'%s' % self.title
-
-    class Admin:
-        pass
 
 
 admin.site.register(Knot)

@@ -387,10 +387,10 @@ body a:hover { color: white; background-color: #c41230; }
 
 .content-title { font-weight: normal; color: #191919; padding-left: 0; padding-bottom: 0; }
 
-.content-header-left { display: inline; float: left; margin-right: 10px; width: 470px; text-align: left; }
+.content-header-left { display: inline; float: left; margin-right: 10px; width: 590px; text-align: left; }
 * html .content-header-left { overflow-x: hidden; }
 
-.content-header-right { display: inline; float: left; margin-right: 0; width: 470px; text-align: right; }
+.content-header-right { display: inline; float: left; margin-right: 0; width: 350px; text-align: right; }
 * html .content-header-right { overflow-x: hidden; }
 
 .content-container { display: inline; float: left; margin-right: 0; width: 950px; padding-top: 1em; }
