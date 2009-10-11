@@ -11,7 +11,7 @@
         {% if knots_a %}
         <ul>
             {% for knot in knots_a %}
-            <li>&#8226; <a href="/knot/{{ knot.slug }}/"><strong>{{ knot.title }}</strong></a> &#47; B: <a href="/strands/{{ knot.strand_b.name }}">{{ knot.strand_b }}</a> &#47; <a href="/author/{{ knot.author }}/">{% if knot.author.first_name %}{{ knot.author.first_name|capfirst }}{% else %}{{ knot.author }}{% endif %}</a> &#47; {{ knot.date|date:"j M Y" }}</li>
+            <li>&#8226; <a href="/knot/{{ knot.slug }}/"><strong>{{ knot.title }}</strong></a> &#47; B: <a href="/strands/{{ knot.strand_b.slug }}">{{ knot.strand_b }}</a> &#47; <a href="/author/{{ knot.author }}/">{% if knot.author.first_name %}{{ knot.author.first_name|capfirst }}{% else %}{{ knot.author }}{% endif %}</a> &#47; {{ knot.date|date:"j M Y" }}</li>
             {% endfor %}
         </ul>
         {% else %}
@@ -27,7 +27,7 @@
         {% if knots_b %}
         <ul>
             {% for knot in knots_b %}
-            <li>&#8226; <a href="/knot/{{ knot.slug }}/"><strong>{{ knot.title }}</strong></a> &#47; A: <a href="/strands/{{ knot.strand_a.name }}">{{ knot.strand_b }}</a> &#47; <a href="/author/{{ knot.author }}/">{% if knot.author.first_name %}{{ knot.author.first_name|capfirst }}{% else %}{{ knot.author }}{% endif %}</a> &#47; {{ knot.date|date:"j M Y" }}</li>
+            <li>&#8226; <a href="/knot/{{ knot.slug }}/"><strong>{{ knot.title }}</strong></a> &#47; A: <a href="/strands/{{ knot.strand_a.slug }}">{{ knot.strand_a }}</a> &#47; <a href="/author/{{ knot.author }}/">{% if knot.author.first_name %}{{ knot.author.first_name|capfirst }}{% else %}{{ knot.author }}{% endif %}</a> &#47; {{ knot.date|date:"j M Y" }}</li>
             {% endfor %}
         </ul>
         {% else %}
