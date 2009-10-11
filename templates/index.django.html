@@ -10,7 +10,7 @@
     </div>
     
     <div class="content-container">
-        {{ knot.body|linebreaks|truncatewords_html:100 }}
+        {{ knot.body|safe|truncatewords_html:100 }}
         <p>
             <a href="/knot/{{ knot.slug }}/">More&#8230;</a>
         </p>
