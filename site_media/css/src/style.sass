@@ -13,6 +13,7 @@
 !background_color = #FFFFFF
 !title_color = #191919
 !dark_red = #C41230
+!highlight_color = #ffedf0
 
 .spacer-1
     +column(1)
@@ -174,6 +175,29 @@ body
 .content-container
     +column(24, true)
     :padding-top 1em
+
+.knot-list
+    table
+        :width 920px
+        :border 0
+    td
+        :padding .25em
+        :border-bottom-width 1px
+        :border-bottom-style solid
+        :border-bottom-color = !dark_red
+    tr:hover
+        :background-color = !highlight_color
+.list-head
+    th
+        :font-size 1.2em
+        :font-weight bold
+        :text-align left
+        :border-bottom-width 1px
+        :border-bottom-style solid
+        :border-bottom-color = !dark_red
+        
+    tr:hover
+        :background-color = !background_color
 
 #footer
     +container

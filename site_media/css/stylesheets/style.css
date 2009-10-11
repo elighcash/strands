@@ -396,6 +396,13 @@ body a:hover { color: white; background-color: #c41230; }
 .content-container { display: inline; float: left; margin-right: 0; width: 950px; padding-top: 1em; }
 * html .content-container { overflow-x: hidden; }
 
+.knot-list table { width: 920px; border: 0; }
+.knot-list td { padding: .25em; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #c41230; }
+.knot-list tr:hover { background-color: #ffedf0; }
+
+.list-head th { font-size: 1.2em; font-weight: bold; text-align: left; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #c41230; }
+.list-head tr:hover { background-color: white; }
+
 #footer { width: 950px; margin: 0 auto; overflow: hidden; display: inline-block; display: block; background-color: #c41230; text-align: left; padding: 0; font: normal 14px/18px 'Trebuchet MS', sans-serif; color: white; border: 0px solid; -moz-border-radius: 8px 8px 0 0; -webkit-border-radius: 8px; -webkit-border-bottom-left-radius: 0; -webkit-border-bottom-right-radius: 0; height: 3em; margin-top: -3em; }
 #footer { display: block; }
 #footer #footer-legal { display: inline; float: left; margin-right: 10px; width: 430px; text-align: left; padding-left: 1em; padding-top: .35em; padding-right: 0; }
