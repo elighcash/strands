@@ -65,9 +65,10 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
+    'STRANDS.middleware.mobile_redirect.MobileRedirect',
 )
 
-ROOT_URLCONF = 'strands_site.urls'
+ROOT_URLCONF = 'STRANDS.urls'
 
 TEMPLATE_DIRS = (
     os.path.join(PROJECT_ROOT, "templates"),

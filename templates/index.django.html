@@ -1,19 +1,24 @@
 {% extends "base.django.html" %}
 
-{% block head_title %}Main{% endblock %}
+{% block extra_head %}
+<meta name="description" content="A content management system powered by Django." />
+{% endblock %}
 
 {% block body %}
-{% for knot in latest_knots %}
-    <div class="content-header">
-        <div class="content-header-left"><span class="content-title">{{ knot.title|capfirst }}</span> &#8226; <a href="/strands/{{ knot.strand_a.slug }}/">{{ knot.strand_a }}</a> &#8226; <a href="/strands/{{ knot.strand_b.slug }}/">{{ knot.strand_b }}</a></div>
-        <div class="content-header-right"><a href="/author/{{ knot.author }}">{{ knot.author.first_name|capfirst }}</a> &#8226; {{ knot.date|date:"j M Y" }}</div>
+    <div id="banner">
+        <div id="index-nav">
+            <h1>STRANDS to read and such</h1>
+            <a id="strands" href="{% url tapestry %}">strands</a>
+            <a id="about" href="{% url about %}">about</a>
+        </div>
     </div>
-    
-    <div class="content-container">
-        {{ knot.body|safe|truncatewords_html:100 }}
-        <p>
-            <a href="/knot/{{ knot.slug }}/">More&#8230;</a>
-        </p>
+    {% if knot %}
+    <div id="teaser">
+        <a id="title" href="{% url display_knot knot.slug %}">{{ knot.title }}</a>
+        <span id="tagline">{{ knot.tagline }}</span><br />
+        <span id="byline">by {% for author in knot.author.all %}{% if not forloop.first %}{% if forloop.last %}{% ifnotequal forloop.counter 2 %},{% endifnotequal %} &amp; {% else %}, {% endif %}{% endif %}<a href="{% url display_author author %}">{% firstof author.first_name|capfirst author.username %}</a>{% endfor %}
+            on {{ knot.date|date:"j M Y" }}<br /> at <a href="{% url tapestry_parameters knot.strand_a.slug knot.strand_b.slug %}">{{ knot.strand_a }} &amp; {{ knot.strand_b }}</a></span>
+        <span id="blurb">{{ knot.blurb }} <a href="{% url display_knot knot.slug %}">read &raquo;</a></span>
     </div>
-    {% endfor %}
+    {% endif %}
 {% endblock %}

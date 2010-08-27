@@ -1,14 +1,77 @@
-{% extends "base.django.html" %}
+{% extends "content_base.django.html" %}
 
-{% block head_title %}Knot&nbsp;&#8226;&nbsp;{{ knot.title }}{% endblock %}
+{% block content_title %}{{ knot.title }}{% endblock %}
 
-{% block body %}
-    <div class="content-header">
-        <div class="content-header-left"><span class="content-title">{{ knot.title|capfirst }}</span> &#8226; <a href="/strands/{{ knot.strand_a.slug }}/">{{ knot.strand_a }}</a> &#8226; <a href="/strands/{{ knot.strand_b.slug }}/">{{ knot.strand_b }}</a></div>
-        <div class="content-header-right"><a href="/author/{{ knot.author }}">{% if knot.author.first_name %}{{ knot.author.first_name|capfirst }}{% else %}{{ knot.author }}{% endif %}</a> &#8226; {{ knot.date|date:"j M Y" }}</div>
-    </div>
-    
-    <div class="content-container">
+{% block extra_content_head %}{#<link rel="stylesheet" href="{% url render_knot_css knot.id %}" type="text/css" media="screen, projection" />#}
+<meta name="description" content="{{ knot.blurb }}" />
+<style>
+{% if request.session.is_mobile %}
+#k{{ knot.id }} img {
+    width:100%;
+}
+{% else %}
+{{ style|safe }}
+{% endif %}
+</style>
+{% endblock %}
+
+--- add in license meta
+
+{% load file_filters %}
+
+{% block content %}
+    <div class="article" id="k{{ knot.id }}">
         {{ knot.body|safe }}
     </div>
+    {% if knot.allow_comments %}
+    <div id="thread-container" class="content-body">
+        Disqus comment embedding goes here, if comments are enabled.
+    </div>
+    {% endif %}
+    {% if not request.session.is_mobile %}
+    <div id="info" class="sidebar"></div>
+    {% ifnotequal knot.attachments.all.count 0 %}<div id="attachment" class="sidebar"></div>{% endifnotequal %}
+    <div id="share" class="sidebar"></div>
+    {% endif %}
+{% endblock %}
+
+{% block hover_meta %}
+<div id="info" class="control">
+    <span id="title">{{ knot.title }}</span>
+    <span id="tagline">{{ knot.tagline }}</span>
+    <span id="byline">by {% for author in knot.author.all %}{% if not forloop.first %}{% if forloop.last %}{% ifnotequal forloop.counter 2 %},{% endifnotequal %} &amp; {% else %}, {% endif %}{% endif %}<a style="font-variant:small-caps;font-style:normal;" href="{% url display_author author %}">{% firstof author.first_name|capfirst author.username %}</a>{% endfor %} on {{ knot.date|date:"j M" }} 0{{ knot.date|date:"Y" }}<br />at <a style="font-variant:small-caps;font-style:normal;" href="{% url tapestry_parameter knot.strand_a.slug %}">{{ knot.strand_a }}</a> &amp; <a style="font-variant:small-caps;font-style:normal;" href="{% url tapestry_parameter knot.strand_b.slug %}">{{ knot.strand_b }}</a></span>
+    <span id="blurb">{{ knot.blurb }}</span>
+</div>
+{% if knot.attachments.all %}
+<div id="attachment" class="control">
+    {% for attachment in knot.attachments.all %}
+    {{ attachment.file.size|pretty_size:0 }} &#8212; {{ attachment.name }}<br />
+    <a href="{{ attachment.file.url }}" title="{{ attachment.description }}">{{ attachment.file.name|filename }}</a>{% if not forloop.last %}<br />{% endif %}
+    {% endfor %}
+</div>
+{% endif %}
+<a class="control" href="http://e∧o.ws/{{ knot.short_url }}">http://e∧o.ws/{{ knot.short_url }} <img src="{{ STATIC_URL }}images/sidebar-share.png" /></a>
+{% endblock %}
+
+{% block extra_content %}
+    {% if not request.session.is_mobile %}
+    <script type="text/javascript">
+        $(".sidebar").css("visibility","visible");
+        var html = {
+            'info':'<div style="font-size:1.5em">{{ knot.title }}</div><div style="font-style:italic;color:#ccc;">{{ knot.tagline }}</div><div style="font-style:italic;">by {% for author in knot.author.all %}{% if not forloop.first %}{% if forloop.last %}{% ifnotequal forloop.counter 2 %},{% endifnotequal %} &amp; {% else %}, {% endif %}{% endif %}<a style="font-variant:small-caps;font-style:normal;" href="{% url display_author author %}">{% firstof author.first_name|capfirst author.username %}</a>{% endfor %} on {{ knot.date|date:"j M" }} 0{{ knot.date|date:"Y" }}<br />at <a style="font-variant:small-caps;font-style:normal;" href="{% url tapestry_parameter knot.strand_a.slug %}">{{ knot.strand_a }}</a> &amp; <a style="font-variant:small-caps;font-style:normal;" href="{% url tapestry_parameter knot.strand_b.slug %}">{{ knot.strand_b }}</a></div>{{ knot.blurb }}',
+            'attachment':'{% if knot.attachments %}{% for attachment in knot.attachments.all %}{{ attachment.file.size|pretty_size:0 }} &#8212; {{ attachment.name }}<br /><a href="{{ attachment.file.url }}" title="{{ attachment.description }}" style="font-size:18px;">{{ attachment.file.name|filename }}</a>{% if not forloop.last %}<br />{% endif %}{% endfor %}{% endif %}',
+            'share':'<input type="text" readonly=readonly style="color:#c1272d;text-align:center;" value="http://e∧o.ws/{{ knot.short_url }}">'
+        }
+        $(".sidebar").each( function () {
+            $(this).hover( function () {
+                $(this).html(html[$(this).attr("id")]);
+            }, function () {
+                $(this).empty();
+            });
+        });
+    </script>
+    {% endif %}
+    {% if knot.allow_comments %}
+        {# Disqus comment JS goes here.#}
+    {% endif %}
 {% endblock %}

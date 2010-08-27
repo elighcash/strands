@@ -1,77 +1,81 @@
-from django.contrib.auth.models import User
 from django.conf import settings
-from django.shortcuts import get_object_or_404
-from django.views.generic.simple import direct_to_template
-from strands.models import Strand, Knot
+from django.contrib.auth.models import User
+from django.contrib.auth.decorators import login_required
+from django.core.urlresolvers import reverse
+from django.http import  HttpResponseRedirect, Http404, HttpResponseForbidden, HttpResponse
+from django.shortcuts import render_to_response, get_object_or_404
+from django.template import RequestContext
+from django.utils import simplejson
+from strands.models import *
+import re, os, random
 
 
-def index(request, template_name = "index.django.html"):
-    latest_knots = Knot.objects.filter(published = True).order_by("-id")[:3]
-    return direct_to_template(request, template_name, extra_context={"latest_knots": latest_knots})
+def index(request, template_name="index.django.html"):
+    try:
+        knot = random.choice(Knot.objects.filter(published=True))
+    except IndexError:
+        knot = None
+    return render_to_response(template_name, {
+        "knot": knot,
+        }, context_instance=RequestContext(request))
 
 #display all knots
 def tapestry(request, template_name="tapestry.django.html"):
-    return direct_to_template(request, template_name, extra_context={"strands": Strand.objects.all()})
+    knots = Knot.objects.filter(published=True)
+    if request.session.get('is_mobile', True):
+        strands = None
+        knots = knots.order_by("-date")
+        num_strands = None
+    else:
+        strands = Strand.objects.all()
+        num_strands = strands.count()
+    return render_to_response(template_name, {
+        "strands": strands,
+        "num_strands": num_strands,
+        "knots": knots
+        }, context_instance=RequestContext(request))
 
-#display all knots with these a and b strands
-def display_strand(request, strand_a_slug="$none", strand_b_slug="$none", ordera="-date", orderb="title", template_name="strand.django.html"):
-    strand_a = get_object_or_4040(slug=strand_a_slug)
-    knots_a = strand_a.strand_a.filter(published=True).order_by(ordera)
-    knots_b = strand_a.strand_b.filter(published=True).order_by(orderb)
-    #if strand_b_id != "$none":
-    #    strand_b = Strand.objects.get(name = strand_b_id)
-    #    knots = knots.filter(strand_b = strand_b_id)
-    #else:
-    #    strand_b = "$none"
-    return direct_to_template(request, template_name,
-            extra_context={"knots_a": knots_a,
-                           "knots_b": knots_b,
-                           "strand_a": strand_a,
-                           #"strand_b":strand_b,
-                           })
 
+
+#display this particular knot
 def display_knot(request, knot_slug, template_name="knot.django.html"):
-    knot = get_object_or_404(slug=knot_slug, published=True)
-    return direct_to_template(request, template_name, extra_context={"knot": knot})
+    knot = get_object_or_404(Knot, slug=knot_slug, published=True)
 
-def display_by_author(request, author_username, order="title", template_name="author.django.html"):
-    author = get_object_or_404(username=author_username)
-    knots = author.knot_set.filter(published = True).order_by(order)
-    oti, osa, osb, oda = "", "", "", ""
-    if order == "title":
-        oti = "-"
-    if order == "strand_a":
-        osa = "-"
-    if order == "strand_b":
-        osb = "-"
-    if order == "date":
-        oda = "-"
-    return direct_to_template(request, template_name,
-            extra_context={"author": author,
-                           "knots": knots,
-                           "oti": oti,
-                           "osa": osa,
-                           "osb": osb,
-                           "oda": oda,
-                           })
+    if knot.style:
+        style = render_knot_css(knot.style, knot.id)
+    else:
+        style = None
+    return render_to_response(template_name, {
+        "knot": knot,
+        "style": style
+        }, context_instance=RequestContext(request))
 
-#def display_by_date(request, date_slug, order="title", template_name="author.django.html"):
-#    date = User.objects.get(username=author_username)
-#    knots = author.knot_set.all().order_by(order)
-#    oti, osa, osb, oda = "", "", "", ""
-#    if order == "title":
-#        oti = "-"
-#    if order == "strand_a":
-#        osa = "-"
-#    if order == "strand_b":
-#        osb = "-"
-#    if order == "date":
-#        oda = "-"
-#    return direct_to_template(request, template_name,
-#            extra_context={"author": author,
-#                           "knots": knots,
-#                           "oti": oti,
-#                           "osa": osa,
-#                           "osb": osb,
-#                           "oda": oda,
-#                           })
+
+def display_knot_short(request, knot_short):
+    knot_short = knot_short.strip('_-.,\)>]/ ')
+    slug = get_object_or_404(Knot, short_url = knot_short).slug
+    return HttpResponseRedirect(reverse('poll_results', args=(slug,)))
+
+
+#helper
+def render_knot_css(style, id):
+    style = simplejson.loads(style)
+    response = ''
+    #add in @font-face rules as necessary
+    for selector in style['rules']:
+        response = response + '#k' + str(id) + ' ' + selector + ' {'
+        for property in style['rules'][selector]:
+            response = response + ' ' + property + ': ' + style['rules'][selector][property] + '; '
+        response = response + '} '
+    return response
+
+
+def display_author(request, author_username, template_name="author.django.html"):
+    return render_to_response(template_name, {
+        "author": get_object_or_404(User, username=author_username)
+        }, context_instance=RequestContext(request))
+
+
+def toggle_mobile(request):
+    request.session['is_mobile'] = not request.session.get('is_mobile', True)
+    return HttpResponseRedirect(request.META.get('HTTP_REFERER', reverse('home')))
