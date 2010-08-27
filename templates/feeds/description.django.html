@@ -1,0 +1,21 @@
+<hr />
+<table width="100%" border="0px" cellpadding="0" cellspacing="0">
+    <tr>
+        <td width="50%">
+            {{ obj.title|upper }}
+        </td>
+        <td width="50%" align="right">
+            <a href="{% url display_author obj.author %}">{{ obj.author.first_name|capfirst }} {{ obj.author.last_name|capfirst }}</a><br />
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <a href="{% url display_strand obj.strand_a.slug %}">{{ obj.strand_a }}</a> &#8226; <a href="{% url display_strand obj.strand_b.slug %}">{{ obj.strand_b }}</a>
+        </td>
+        <td align="right">
+            {{ obj.date|date:"j M" }} 0{{ obj.date|date:"Y" }}
+        </td>
+    </tr>
+</table>
+<hr />
+{{ obj.body|safe }}

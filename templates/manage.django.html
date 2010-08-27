@@ -1,0 +1,168 @@
+{% extends "content_base.django.html" %}
+
+{% block content_title %}Manage{% endblock %}
+
+{% block content %}
+<h2>Manage Knots</h2>
+<table id="knot-list">
+    <tr>
+        <th>Title</th><th>Authors</th><th>Published</th><th>Date</th>
+    </tr>
+    {% for knot in knots %}<tr><td>{{ knot.title }}</td><td><ul>{% for author in knot.author.all %}<li>{{ author }}</li>{% endfor %}</ul></td><td>{{ knot.published }}</td><td>{{ knot.date }}</td></tr>{% endfor %}
+</table>
+
+{% if can_manage %}
+<h2>Manage Users</h2>
+<table id="manage-users">
+{% for user in users %}<tr{% ifequal request.user user %} id="you"{% endifequal %}><td>{{ user }}</td><td><input id="{{ user }}-manage" type="checkbox"{% if X %} checked{% endif %}{% ifequal current_user user %} disabled=disabled title="Can't change your own permissions!"{% endifequal %}></td></tr>
+{% endfor %}
+</table>
++ user - user
+editors = models.ManyToManyField(User, blank=True, related_name="manager", help_text="Users who can edit any post by default.")
+<h2>Site Settings</h2>
+<table id="site-settings">
+    <tr>
+        <td>Site title:</td>
+        <td><input id="site-title" class="site-setting" placeholder="Site Title" value="{{ manager.site_title }}"></td>
+        <td id="site-title-status" class="status"></td>
+    </tr>
+    <tr>
+        <td>Publisher name (for copyright)</td>
+        <td><input id="publisher-name" class="site-setting" placeholder="Site Copyright Owner" value="{{ manager.publisher_name }}"></td>
+        <td id="publisher-name-status" class="status"></td>
+    </tr>
+    <tr>
+        <td>Allow attachments:</td>
+        <td><input id="allow-attachments" class="site-setting" type="checkbox" {% if manager.allow_attachments %}checked {% endif %}></td>
+        <td id="allow-attachments-status" class="status"></td>
+    </tr>
+    <tr>
+        <td>Allow images:</td>
+        <td><input id="allow-images" class="site-setting" type="checkbox" {% if manager.allow_images %}checked {% endif %}></td>
+        <td id="allow-images-status" class="status"></td>
+    </tr>
+    <tr>
+        <td>Allow locations:</td>
+        <td><input id="allow-locations" class="site-setting" type="checkbox" {% if manager.allow_locations %}checked {% endif %}></td>
+        <td id="allow-locations-status" class="status"></td>
+    </tr>
+    <tr>
+        <td>Allow custom fonts:</td>
+        <td><input id="allow-custom-fonts" class="site-setting" type="checkbox" {% if manager.allow_fonts %}checked {% endif %}></td>
+        <td id="allow-custom-fonts-status" class="status"></td>
+    </tr>
+    <tr id="font-list"{% if not manager.allow_fonts %} style="display:none;"{% endif %}>
+        <td>Fonts:</td>
+        <td>font list +font -font</td>
+        <td id="font-list-status" class="status"></td>
+    </tr>
+    <tr>
+        <td>Allow RSS:</td>
+        <td><input id="allow-rss" class="site-setting" type="checkbox" {% if manager.allow_rss %}checked {% endif %}></td>
+        <td id="allow-rss-status" class="status"></td>
+    </tr>
+    <tr id="rss-default-setting"{% if not manager.allow_rss %} style="display:none;"{% endif %}>
+        <td>RSS default:</td>
+        <td><input id="rss-default" class="site-setting" type="checkbox" {% if manager.knot_rss_default %}checked {% endif %}></td>
+        <td id="rss-default-status" class="status"></td>
+    </tr>
+    <tr>
+        <td>Allow comments:</td>
+        <td><input id="allow-comments" class="site-setting" type="checkbox" {% if manager.allow_comments %}checked {% endif %}></td>
+        <td id="allow-comments-status" class="status"></td>
+    </tr>
+    <tr id="comments-default-setting"{% if not manager.allow_comments %} style="display:none;"{% endif %}>
+        <td>Comments default:</td>
+        <td><input id="comments-default" class="site-setting" type="checkbox" {% if manager.knot_comments_default %}checked {% endif %}></td>
+        <td id="comments-default-status" class="status"></td>
+    </tr>
+    <tr>
+        <td>License default:</td>
+        <td>
+            <select id="default-license">
+                <option>None (Full Copyright)</option>
+                {% for license in licenses %}<option>{{ license }}</option>{% endfor %}
+            </select></td>
+        <td id="default-license-spinner"></td>
+    </tr>
+    <tr id="license-list">
+        <td>Licenses:</td>
+        <td>(+) license
+            <ul>
+                {% for license in licenses %}<li>{{ license }} (-)</li>{% endfor %}
+            </ul>
+        </td>
+        <td id="license-list-spinner"></td>
+    </tr>
+</table>
+
+prompt for deletes
+{% endif %}
+{% endblock %}
+
+{% block extra_content %}
+<script type="text/javascript">
+    $("#allow-fonts").click( function () {
+        $("#font-list").toggle();
+    });
+    $("#allow-rss").click( function () {
+        $("#rss-default").toggle();
+    });
+    $("#allow-comments").click( function () {
+        $("#comments-default").toggle();
+    });
+
+    var rootURL = '{% url manage_ajax %}';
+    var currentVal = {};
+    var spinnerHTML = '<img src="{{ STATIC_URL }}images/small-spinner.gif" />';
+    function hideSpinner() {
+        var selector = '#' + id + '-spinner';
+        $(selector).hide();
+    }
+    function showSpinner() {
+        var selector = '#' + id + '-spinner';
+        $(selector).show();
+    }
+    function setStatus(target_id, statusMsg, color) {
+        console.log(target_id);
+        var selector = '#' + target_id + '-status';
+        $(selector).fadeIn(1);
+        if(color) {
+            $(selector).css('color',color);
+        } else {
+            $(selector).css('color','red');
+        }
+        $(selector).html(statusMsg);
+        if(color=='green') {
+            $(selector).fadeOut(3000);
+        }
+    }
+
+    $(".site-setting").each( function () {
+        var that = this;
+        $(this).change( function () {
+            var data = {}
+            var val;
+            if ($(that).attr("type") === "checkbox") {
+                val = $(that)[0].checked;
+            } else {
+                val = $(that).val();
+            }
+            data[that.id] = val;
+            $(that).attr("disabled","disabled");
+            setStatus(spinnerHTML);
+            $.post( rootURL,data, function (response) {
+                if(response.status == 'ok') {
+                    if($(that).val() == '') {
+                        setStatus(that.id, 'cleared','green');
+                    } else {
+                        setStatus(that.id, 'saved','green');
+                    }
+                }
+                var selector = '#' + that.id;
+                $(selector).attr("disabled","");
+            }, dataType="json");
+        });
+    });
+</script>
+{% endblock %}

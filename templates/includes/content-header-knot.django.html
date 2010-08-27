@@ -1,0 +1,11 @@
+<div class="content-header">
+    <h2 class="content-title"><a href="{% url display_knot knot.slug %}">{{ knot.title|upper }}</a></h2>
+    <div class="content-header-left">
+        {% if knot.blurb %}<span class="content-sub-heading tagline">{{ knot.blurb }}</span>{% else %}&nbsp;{% endif %}
+    </div>
+    <div class="content-header-right">
+        <div class="content-sub-heading"> by {% for author in knot.author.all %}{% if not forloop.first %}{% if forloop.last %}{% ifnotequal forloop.counter 2 %},{% endifnotequal %} &amp; {% else %}, {% endif %}{% endif %}<a href="{% url display_author author %}">{{ author.first_name|capfirst }}</a>{% endfor %} at 
+        <a href="{% url display_strand knot.strand_a.slug %}">{{ knot.strand_a }}</a> &amp; <a href="{% url display_strand knot.strand_b.slug %}">{{ knot.strand_b }}</a> on 
+        {{ knot.date|date:"j M" }} 0{{ knot.date|date:"Y" }}</div>
+    </div>
+</div>

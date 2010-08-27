@@ -1,0 +1,285 @@
+{% extends "content_base.django.html" %}
+{% with request.user as user %}
+{% block content_title %}Editing {{ user }}'s Profile{% endblock %}
+
+{% block extra_content_headx %}
+<script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>
+<script type="text/javascript">
+    var country, countryCode, region, regionCode, city, postalCode, street = '';
+    var mapOptions = {
+        zoom: 13,
+        mapTypeId: google.maps.MapTypeId.ROADMAP
+    };
+    var map, marker, geocoder, currentPosition;
+
+    function reverseGeo () {
+        var newLocation = marker.getPosition();
+        if(geocoder) {
+            geocoder.geocode({'latLng': newLocation}, function(results, status) {
+                if (status == google.maps.GeocoderStatus.OK) {
+                    var address_components = results[0].address_components;
+                    street = ' ';
+                    postalCode = '';
+                    city = '';
+                    region = '';
+                    country = '';
+                    for (i=0;i<address_components.length;i++) {
+                        type = address_components[i].types[0];
+                        longName = address_components[i].long_name;
+                        if (type=='country') {
+                            country = longName;
+                        } else if (type=='administrative_area_level_1') {
+                            region = longName;
+                        } else if (type=='locality') {
+                            city = longName;
+                        } else if (type=='postal_code') {
+                            postalCode = longName;
+                        } else if (type=='street_address') {
+                            street = longName;
+                        } else if (type=='route') {
+                            street = street + longName;
+                        } else if (type=='street_number') {
+                            street = longName + street;
+                        }
+                    }
+                    updateLocationFields();
+                } else {
+                }
+            });
+        }
+    }
+
+
+    //Gets the coordinates from the address information.
+    function getGeoInformation () {
+    	spinner.show();
+    	$("#status").text('');
+        country = countryField.val();
+        region = regionField.val();
+        city = cityField.val();
+        postalCode = postalCodeField.val();
+        street = streetField.val();
+        var address = street + ', ' + city + ', ' + region + ' ' + postalCode + ' ' + country;
+        var zoom = 16;
+        if(geocoder) {
+            geocoder.geocode({'address': address}, function(results, status) {
+                if (status == google.maps.GeocoderStatus.OK) {
+                    var type = results[0].types[0];
+                    if (type=='country') {
+                        zoom = 5;
+                    } else if (type=='administrative_area_level_1') {
+                        zoom = 8;
+                    } else if (type=='locality') {
+                        zoom = 14;
+                    } else if (type=='postal_code') {
+                        zoom = 14;
+                    }
+                    curLocation = results[0].geometry.location
+                    setMapMarker();
+                    map.setZoom(zoom);
+                    updateCoordinateFields();
+    				spinner.hide();
+                } else {
+    				spinner.hide();
+                    //Geocoder failed
+                }
+            });
+        }
+    }
+
+    //Centers the map at the current location.
+    function setMapMarker () {
+        map.setCenter(curLocation);
+        marker.setPosition(curLocation);
+    }
+
+
+    //Updates the location fields with the latest information.
+    function updateLocationFields () {
+        countryField.val(country);
+        regionField.val(region);
+        cityField.val(city);
+        postalCodeField.val(postalCode);
+        street = street.replace(/^\s*/, '').replace(/\s*$/, ''); //strip leading/trailing spaces
+        streetField.val(street);
+        updateCoordinateFields();
+    }
+
+    //Updates the coordinate fields with the marker position.
+    function updateCoordinateFields () {
+        latField.val(marker.getPosition().lat());
+    	lngField.val(marker.getPosition().lng());   
+    }
+
+    //Updates the current location with a clicked position.
+    function moveMarker (clickEvent) {
+        curLocation = clickEvent.latLng;
+        setMapMarker();
+        getReverseGeoInformation();
+    }
+
+    //Attempts auto-geolocation. Called when the "Locate Me" button is clicked.
+    function locateMe() {
+    	spinner.show();
+    	$("#status").text('');
+    	//Try using geolocation information from the browser
+        if(navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(function(position) {
+                //Browser geolocation succeeded, set current location to provided coordinates
+                //and do a reverse geocoding lookup.
+                curLocation = new google.maps.LatLng(position.coords.latitude,position.coords.longitude);
+                getReverseGeoInformation();
+            }, function() {
+                //Fall back to IP geolocation if browser's geolocation failed
+                ipGeolocate(false);
+            });
+        } else {
+            //Fall back to IP geolocation if no browser's geolocation possible
+            ipGeolocate(false);
+        }
+    }
+
+    function initialize() {
+        map = new google.maps.Map(document.getElementById("map-canvas"), mapOptions);
+        marker = new google.maps.Marker({
+            map: map,
+            title:"",
+            draggable:true
+        });
+        geocoder = new google.maps.Geocoder();
+        google.maps.event.addListener(marker, 'dragend', getReverseGeoInformation);
+        google.maps.event.addListener(map, 'click', moveMarker);
+        findControl.click( getGeoInformation );
+        locMeControl.click ( locateMe );
+
+        if (latField.val() == '' && lngField.val() == '') {
+            ipGeolocate(true);
+        } else {
+            curLocation = new google.maps.LatLng(latField.val(),lngField.val());
+            setMapMarker();
+        }
+
+    }
+</script>
+{% endblock %}
+
+{% block content %}
+{% with user.profile.all.0 as profile %}
+    <h2>Editing {{ user }}'s Profile (<a href="{% url display_author user %}">view</a>)</h2>
+    <table id="author-profile">
+        <tr>
+            <td>First Name:</td>
+            <td><input id="author-first-name" class="author-data" placeholder="First Name" value="{{ user.first_name }}"></td>
+            <td id="author-first-name-status" class="status"></td>
+        </tr>
+        <tr>
+            <td>Last Name:</td>
+            <td><input id="author-last-name" class="author-data" placeholder="Last Name" value="{{ user.last_name }}"></td>
+            <td id="author-last-name-status" class="status"></td>
+        </tr>
+        <tr>
+            <td>Website:</td>
+            <td><input id="author-url" class="author-data" placeholder="example.com" value="{{ profile.url }}" type="url"></td>
+            <td id="author-url-status" class="status"></td>
+        </tr>
+        <tr>
+            <td>Twitter:<div class="help-text">(no @)</div></td>
+            <td><input id="author-twitter" class="author-data" placeholder="twittername" value="{{ profile.twitter_name }}" size="15"></td>
+            <td id="author-twitter-status" class="status"></td>
+        </tr>
+        <tr>
+            <td>Bio:<div class="help-text">(html allowed)</div></td>
+            <td><textarea id="author-bio" class="author-data" placeholder="Bio">{{ profile.bio }}</textarea></td>
+            <td id="author-bio-status" class="status"></td>
+        </tr>
+    </table>
+    <div id="author-image-location">
+        {% if profile.image %}<img id="current-author-image" src="{{ profile.image.url }}" />{% else %}No Image{% endif %}
+        <div id="author-image">
+            <form method="POST">
+                <input id="author-image-file" name="author-image" type="file" />
+                <button action="submit">Save</button>
+                <br/>Best at 468px by 304px
+            </form>
+            <span id="author-image-status" class="status"></span>
+        </div>
+        <div id="author-location">
+            Location:
+            {% with profile.location as loc %}
+            <div id="map-canvas"></div>
+            <a href="#">&gt;</a>
+            <input id="location-name" class="loc-data" placeholder="name" value="{{ loc.name }}">
+            <input id="location-address" class="loc-data" placeholder="# street" value="{{ loc.address }}">
+            <input id="location-city" class="loc-data" placeholder="city" value="{{ loc.city }}">
+            <input id="location-region" class="loc-data" placeholder="region" value="{{ loc.region }}">
+            <input id="location-postalcode" class="loc-data" placeholder="postal code" value="{{ loc.postalcode }}">
+            <button>Save</button>
+            <span id="author-location-status" class="status"></span>
+            {% endwith %}
+        </div>
+    </div>
+{% endwith %}
+{% endblock %}
+{% endwith %}
+
+{% block extra_content %}
+<script type="text/javascript">
+    var rootURL = '{% url edit_profile_ajax %}';
+    var currentVal = {};
+    var spinnerHTML = '<img src="{{ STATIC_URL }}images/small-spinner.gif" />';
+    function hideSpinner() {
+        var selector = '#' + id + '-spinner';
+        $(selector).hide();
+    }
+    function showSpinner() {
+        var selector = '#' + id + '-spinner';
+        $(selector).show();
+    }
+    function setStatus(target_id, statusMsg, color) {
+        var selector = '#' + target_id + '-status';
+        $(selector).fadeIn(1);
+        if(color) {
+            $(selector).css('color',color);
+        } else {
+            $(selector).css('color','red');
+        }
+        $(selector).html(statusMsg);
+        if(color=='green') {
+            $(selector).fadeOut(3000);
+        }
+    }
+
+    $(".author-data").each( function () {
+        currentVal[$(this).attr("id")] = $(this).val();
+    });
+
+    $(".author-data").each( function () {
+        var that = this;
+        $(that).change( function () {
+            var data = {}
+            data[that.id] = $(that).val();
+            $(that).attr("disabled","disabled");
+            setStatus(that.id, spinnerHTML);
+            $.post( rootURL,data, function (response) {
+                if(response.status === 'ok') {
+                    if($(that).val() === '') {
+                        setStatus(that.id, 'cleared','green');
+                    } else {
+                        setStatus(that.id, 'saved','green');
+                    }
+                }
+                var selector = '#' + that.id;
+                $(selector).attr("disabled","");
+            }, dataType="json");
+        });
+    });
+    $("#author-image").click( function () {
+        $("#author-image-form").slideToggle('fast');
+    });
+    $("#author-location").click( function () {
+        $("#author-location-form").slideToggle('fast');
+    });
+
+    //$(document).ready( function() { initialize(); } );
+</script>
+{% endblock %}

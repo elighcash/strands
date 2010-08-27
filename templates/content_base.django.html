@@ -1,0 +1,58 @@
+{% extends "base.django.html" %}
+
+{% block title %}{% block content_title %}{% endblock %}&nbsp;&#8226;&nbsp;{% endblock %}
+
+{% block extra_head %}
+    {% block extra_content_head %}{% endblock %}
+{% endblock %}
+
+{% block body%}
+    <div id="content">
+        {% block content %}
+        {% endblock %}
+    </div>
+    
+    <div id="nav-banner">
+        <div id="nav">
+            <a href="{% url home %}" id="button-home" class="menu-button" title="" >home</a>
+            <a href="{% url tapestry %}" id="button-strands" class="menu-button" title="View the Tapestry">strands</a>
+            <a href="{% url about %}" id="button-about" class="menu-button" title="About STRANDS">about</a>
+            {% if request.session.is_mobile %}
+                <img id="mobile-control" src="{{ STATIC_URL }}images/mobile_control.png" />
+            {% else %}
+            <a href="{% url toggle_mobile %}" id="mobile" title="Switch to mobile version"></a>
+            {% endif %}
+            <a href="http://typeish.net/strands/" id="badge"><img src="{{ STATIC_URL }}images/strands_badge.png" title="Built using the STRANDS content management system" alt="woven with STRANDS" /></a>
+
+            {# {% if user.is_authenticated %} #}
+            {# <a href="{% url manage %}" class="menu-button" id="button-manage">manage</a> #}
+            {# <a href="{% url edit_profile %}" class="menu-button" id="button-profile">profile</a> #}
+            {# {% endif %} #}
+        </div>
+    </div>
+    {% block extra_content %}
+    {% endblock %}
+{% endblock %}
+
+
+{% block extra_body %}
+{% if request.session.is_mobile %}
+    <div id="hover-meta">
+        {% block hover_meta %}{% endblock %}
+        <a class="control" href="{% url toggle_mobile %}">STANDARD &raquo; <img src="{{ STATIC_URL }}images/standard_icon.png" /></a>
+    </div>
+    <img style="display:none;" src="{{ STATIC_URL }}images/mobile_control_up.png" /> {# just to preload the image #}
+    <script type="text/javascript">
+        var control_visible = false;
+        $("#mobile-control").click(function() {
+            if(control_visible) {
+                $(this).attr("src","{{ STATIC_URL }}images/mobile_control.png");
+            } else {
+                $(this).attr("src","{{ STATIC_URL }}images/mobile_control_up.png");
+            }
+            control_visible = !control_visible
+            $("#hover-meta").slideToggle('100');
+        });
+    </script>
+{% endif %}
+{% endblock %}

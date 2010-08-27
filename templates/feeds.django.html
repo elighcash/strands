@@ -1,0 +1,65 @@
+{% extends "content_base.django.html" %}
+
+{% block content_title %}RSS Feeds{% endblock %}
+
+{% block content %}
+    <div class="content-container">
+        <div class="content-header">
+            <div class="content-header-left">
+                <span class="content-title">ALL RSS FEEDS</span>
+            </div>
+        </div>
+        <div class="content-body">
+            <p>
+                All feeds are <a href="http://validator.w3.org/feed/docs/rss2.html">RSS 2.0</a>
+            </p>
+            <div class="feed-list">
+                <table>
+                    <thead class="list-head">
+                        <tr><th>Knot Feeds</th><th>&nbsp;</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><a href="/">Latest Knots</a></td>
+                            <td><a href="/feeds/latest/"><img src="{{ STATIC_URL }}images/feed-icon-14x14-grey.png" style="margin-bottom:-2px" width="14px" height="14px"/></a></td>
+                        </tr>
+                        <tr>
+                            <td>All Knots</td>
+                            <td><a href="/feeds/all/"><img src="{{ STATIC_URL }}images/feed-icon-14x14-grey.png" style="margin-bottom:-2px" width="14px" height="14px"/></a></td>
+                        </tr>
+                    </tbody>
+                </table>
+    
+                <table>
+                    <thead class="list-head">
+                        <tr><th>Strand Feeds</th><th>&nbsp;</th></tr>
+                    </thead>
+                    <tbody>
+                    {% for strand in feeds_strand %}
+                        <tr>
+                            <td><a href="/strands/{{ strand.slug }}">{{ strand }}</a></td>
+                            <td><a href="/feeds/strand/{{ strand.slug }}"><img src="{{ STATIC_URL }}images/feed-icon-14x14-grey.png" style="margin-bottom:-2px" width="14px" height="14px"/></a></td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+    
+                <table>
+                    <thead class="list-head">
+                        <tr><th>Author Feeds</th><th>&nbsp;</th></tr>
+                    </thead>
+                    <tbody>
+                    {% for author in feeds_author %}
+                        <tr>
+                            <td><a href="/author/{{ author }}">{{ author.first_name|capfirst }} {{ author.last_name|capfirst }}</a></td>
+                            <td><a href="/feeds/author/{{ author }}"><img src="{{ STATIC_URL }}images/feed-icon-14x14-grey.png" style="margin-bottom:-2px" width="14px" height="14px"/></a></td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+
+{% endblock %}
