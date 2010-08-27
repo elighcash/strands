@@ -14,5 +14,6 @@ For now, if you want to use this, you can download the project and get it set up
 
 
 This distribution uses (and includes):
+
  *  [Primer](http://github.com/mojombo/primer)
  *  [explorercanvas](http://code.google.com/p/explorercanvas/)
