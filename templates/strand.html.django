@@ -1,4 +1,4 @@
-{% extends "base.django.html" %}
+{% extends "base.html.django" %}
 
 {% block head_title %}Strand&nbsp;&#8226;&nbsp;{{ strand_a.name }}{% endblock %}
 

@@ -1,0 +1,44 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta name="description" content="{% block meta_description %}{% endblock meta_description %}" />
+
+        <title>{% block title %}{% endblock title %}STRANDS: to read and such.</title>
+
+        <link rel="stylesheet" href="{{ STATIC_URL }}css/screen.css" type="text/css" />
+        <link rel="icon" href="{{ STATIC_URL }}images/favicon.png" type="image/png"/>
+
+        {% block extra_head %}
+        {% endblock extra_head %}
+
+    </head>
+    
+    <body>
+
+        <div id="nav">
+            <a href="{% url home %}" id="button-home" class="menu-button">Home</a>
+            <a href="{% url tapestry %}" id="button-strands" class="menu-button">Archive</a>
+            <a href="{% url about %}" id="button-about" class="menu-button">About</a>
+            
+            <a href="/admin/" id="button-admin" class="menu-button">Admin</a>
+            <a href="http://typeish.net/strands/" id="badge"><img src="{{ STATIC_URL }}images/strands_badge.png" title="Built using the STRANDS content management system" alt="woven with STRANDS" /></a>
+
+            {% if user.is_authenticated %}
+            {#<a href="{% url manage %}" class="menu-button" id="button-manage">manage</a>#}
+            {#<a href="{% url edit_profile %}" class="menu-button" id="button-profile">profile</a>#}
+            {% endif %}
+        </div>
+
+        <div id="content">
+            {% block body %}
+            {% endblock body %}
+        </div>
+
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js" type="text/javascript"></script>
+        
+        {% block extra_body %}
+        {% endblock extra_body %}
+
+    </body>
+</html>

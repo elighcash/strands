@@ -1,4 +1,4 @@
-{% extends "content_base.django.html" %}
+{% extends "content_base.html.django" %}
 {% with request.user as user %}
 {% block content_title %}Editing {{ user }}'s Profile{% endblock %}
 

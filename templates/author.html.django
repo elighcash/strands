@@ -1,4 +1,4 @@
-{% extends "content_base.django.html" %}
+{% extends "content_base.html.django" %}
 
 {% block content_title %}About{% endblock %}
 

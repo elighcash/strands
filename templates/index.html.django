@@ -1,0 +1,8 @@
+{% extends "base.html.django" %}
+
+{% block meta_description %}A content management system powered by Django.{% endblock meta_description %}
+
+{% block body %}
+    <a href="{% url display_knot knot.slug %}">{{ knot.title }}</a>
+    {{ knot.blurb }}
+{% endblock %}

@@ -3,6 +3,11 @@ from django.conf import settings
 from django.views.generic.simple import direct_to_template
 
 from views import *
+from feeds import *
+
+feeds = {'latest.xml': latest_knots,
+        'author.xml': author_feed,
+        'all.xml': all_knots}
 
 urlpatterns = patterns('',
     #index url
@@ -11,10 +16,8 @@ urlpatterns = patterns('',
 
     #misc urls
     url(r'^toggle-mobile/', toggle_mobile, name='toggle_mobile'),
+    url(r'^feeds/(?P<url>.*)$', 'django.contrib.syndication.views.feed', {'feed_dict': feeds}, name="feed"),
     
-    #url(r'^feeds/(?P<url>.*)$', 'django.contrib.syndication.views.feed', {'feed_dict': feeds}, name="feed"),
-    #url(r'^feeds/', 'strands.views.feeds', name='feed_index'),
-
     #strands main urls
     url(r'^strands/\#(?P<a>[\w]+)$', tapestry, name='tapestry_parameter'),                  #these two are here for reversal purposes mostly
     url(r'^strands/\#(?P<a>[\w]+)\&(?P<b>[\w]+)$', tapestry, name='tapestry_parameters'),

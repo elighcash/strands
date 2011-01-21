@@ -1,0 +1,77 @@
+{% extends "base.html.django" %}
+{% load file_filters %}
+
+{% block content_title %}{{ knot.title }}{% endblock %}
+
+<style>
+{% if request.session.is_mobile %}
+#k{{ knot.id }} img {
+    width:100%;
+}
+{% else %}
+{{ style|safe }}
+{% endif %}
+</style>
+
+include knot style
+include knot license
+
+
+{% block body %}
+    
+    {% if knot.allow_comments %}
+        <div id="thread-container" class="content-body">
+            Disqus comment embedding goes here, if comments are enabled.
+        </div>
+    {% endif %}
+    
+    <div id="info" class="sidebar">
+        <span>{{ knot.title }}</span>
+        <span>{{ knot.tagline }}</span>
+        <span>by {% include "includes/author_list.html.django" %}</span>
+        <span>{{ knot.date|date:"j M Y" }}</span>
+        <span><a style="" href="">{{ knot.strand_a }}</a> &amp; <a style="" href="">{{ knot.strand_b }}</a></span>
+        <span>{{ knot.blurb }}</span>
+    </div>
+
+    {% if knot.attachments.all.0 %}
+        <div id="attachment" class="sidebar">
+            <ul>
+                {% for attachment in knot.attachments.all %}
+                <li>
+                    {{ attachment.file.size|pretty_size:0 }} &#8212; {{ attachment.name }} &#8212; <a href="{{ attachment.file.url }}" title="{{ attachment.description }}">{{ attachment.file.name|filename }}</a>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+    {% endif %}
+
+    <div id="share" class="sidebar">
+        <a href="{{ knot.get_share_url }}">{{ knot.get_share_url }}</a>
+    </div>
+
+    <div class="article" id="k{{ knot.id }}">
+        {{ knot.body|safe }}
+    </div>
+
+{% endblock body %}
+
+
+{% block extra_content %}
+    <script type="text/javascript">
+        $(".sidebar").css("visibility","visible");
+        var html = {
+
+        }
+        $(".sidebar").each( function () {
+            $(this).hover( function () {
+                $(this).html(html[$(this).attr("id")]);
+            }, function () {
+                $(this).empty();
+            });
+        });
+    </script>
+    {% if knot.allow_comments %}
+        {# Disqus comment JS goes here.#}
+    {% endif %}
+{% endblock %}

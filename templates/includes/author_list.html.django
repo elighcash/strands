@@ -1,0 +1,1 @@
+{% for author in knot.author.all %}{% if not forloop.first %}{% if forloop.last %}{% ifnotequal forloop.counter 2 %},{% endifnotequal %} &amp; {% else %}, {% endif %}{% endif %}<a href="{% url display_author author %}">{% firstof author.first_name|capfirst author.username %}</a>{% endfor %}

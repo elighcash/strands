@@ -1,4 +1,4 @@
-{% extends "base.django.html" %}
+{% extends "base.html.django" %}
 
 {% block title %}{% block content_title %}{% endblock %}&nbsp;&#8226;&nbsp;{% endblock %}
 
@@ -24,10 +24,10 @@
             {% endif %}
             <a href="http://typeish.net/strands/" id="badge"><img src="{{ STATIC_URL }}images/strands_badge.png" title="Built using the STRANDS content management system" alt="woven with STRANDS" /></a>
 
-            {# {% if user.is_authenticated %} #}
-            {# <a href="{% url manage %}" class="menu-button" id="button-manage">manage</a> #}
-            {# <a href="{% url edit_profile %}" class="menu-button" id="button-profile">profile</a> #}
-            {# {% endif %} #}
+            {% if user.is_authenticated %}
+            <a href="{% url manage %}" class="menu-button" id="button-manage">manage</a>
+            <a href="{% url edit_profile %}" class="menu-button" id="button-profile">profile</a>
+            {% endif %}
         </div>
     </div>
     {% block extra_content %}

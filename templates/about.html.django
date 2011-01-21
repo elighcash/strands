@@ -1,0 +1,10 @@
+{% extends "base.html.django" %}
+
+{% block title %}About{% endblock title %}
+
+{% block body %}
+About STRANDS
+{% endblock body %}
+
+{% block extra_content %}
+{% endblock %}

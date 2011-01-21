@@ -6,13 +6,13 @@ from django.http import  HttpResponseRedirect, Http404, HttpResponseForbidden, H
 from django.shortcuts import render_to_response, get_object_or_404
 from django.template import RequestContext
 from django.utils import simplejson
-from strands.models import *
+from models import *
 import re, os, random
 
 
-def index(request, template_name="index.django.html"):
+def index(request, template_name="index.html.django"):
     try:
-        knot = random.choice(Knot.objects.filter(published=True))
+        knot = Knot.objects.filter(published=True).order_by("-date")[0]
     except IndexError:
         knot = None
     return render_to_response(template_name, {
@@ -20,7 +20,7 @@ def index(request, template_name="index.django.html"):
         }, context_instance=RequestContext(request))
 
 #display all knots
-def tapestry(request, template_name="tapestry.django.html"):
+def tapestry(request, template_name="tapestry.html.django"):
     knots = Knot.objects.filter(published=True)
     if request.session.get('is_mobile', True):
         strands = None
@@ -38,7 +38,7 @@ def tapestry(request, template_name="tapestry.django.html"):
 
 
 #display this particular knot
-def display_knot(request, knot_slug, template_name="knot.django.html"):
+def display_knot(request, knot_slug, template_name="knot.html.django"):
     knot = get_object_or_404(Knot, slug=knot_slug, published=True)
 
     if knot.style:
@@ -70,7 +70,7 @@ def render_knot_css(style, id):
     return response
 
 
-def display_author(request, author_username, template_name="author.django.html"):
+def display_author(request, author_username, template_name="author.html.django"):
     return render_to_response(template_name, {
         "author": get_object_or_404(User, username=author_username)
         }, context_instance=RequestContext(request))
