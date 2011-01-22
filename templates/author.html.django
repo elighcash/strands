@@ -1,9 +1,9 @@
-{% extends "content_base.html.django" %}
+{% extends "base.html.django" %}
 
-{% block content_title %}About{% endblock %}
+{% block title %}About{% endblock title %}
 
-{% block content %}
-{% with author.profile.all.0 as profile %}
+{% block body %}
+{% with author.profile as profile %}
     <div class="author-bio">
         <img class="author-image" src="{{ profile.image.url }}">
         <h2 class="author-name">{{ author.first_name }} {{ author.last_name }}</h2>{% if profile.location %}<span class="author-location">{{ profile.location.city }}, {{ profile.location.region }}</span>{% endif %}
@@ -13,7 +13,7 @@
 
     </div>
     <ul class="author-knot-list">
-    {% for knot in author.author_knots.all %}
+    {% for knot in author.knots.all %}
         <li>
             <div class="meta">
                 <h3><a href="{% url display_knot knot.slug %}">{{ knot.title }}</a></h3>
@@ -28,7 +28,7 @@
                     {% endif %}
                     <a href="{% url display_author author %}">{% firstof author.first_name|capfirst author.username %}</a>
                     {% endfor %}
-                    on {{ knot.date|date:"j M" }} 0{{ knot.date|date:"Y" }} 
+                    on {{ knot.date|date:"j M Y" }} 
                     at <a href="{% url tapestry_parameters knot.strand_a.slug knot.strand_b.slug %}">{{ knot.strand_a }} &amp; {{ knot.strand_b }}</a>
                 </span>
             </div>
@@ -39,8 +39,8 @@
     {% endfor %}
     </ul>
 {% endwith %}
-{% endblock %}
+{% endblock body%}
 
-{% block extra_content %}
+{% block extra_body %}
 
-{% endblock %}
+{% endblock extra_body %}

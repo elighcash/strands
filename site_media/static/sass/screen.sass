@@ -2,33 +2,43 @@ $background_color: white
 $text_color: black
 $link_color: red
 
+$width: 960px
+
+$sans_serif: Lucida Grande, Verdana, sans-serif
+$serif: Caslon, "Adobe Caslon Pro", "Times New Roman", serif
+
 html
     background: #ddd
 body
     background: $background_color
-    width: 960px
+    font-family: $serif
     margin: 0 auto
     min-height: 100%
+    width: $width
 
 a
     color: $link_color
+    text-decoration: none
     &:hover
-        color: $background_color
-        background-color: $link_color
+        text-decoration: underline
 
 #nav
-    background-color: #ccc
-    padding: 0.25em 1em
-    position: absolute
+    background-color: black
+    font-family: $sans_serif
+    padding: 20px
+    width: $width - 40px
     a
         font-size: 1.5em
         margin-right: 0.25em
-    #mobile
-        background-image: url(/site_media/static/images/mobile.png)
-        background-position: center top
-        width: 20px
-        height: 34px
-        margin-top: 5px
-        margin-right: 5px
-        display: inline-block
+    #badge
         float: right
+        &:hover
+            background-color: transparent
+
+#content
+    padding: 20px
+
+.sidebar
+    float: left
+    padding: 0 20px 20px 0
+    width: 100px

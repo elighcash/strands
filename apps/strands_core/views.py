@@ -10,13 +10,10 @@ from models import *
 import re, os, random
 
 
-def index(request, template_name="index.html.django"):
-    try:
-        knot = Knot.objects.filter(published=True).order_by("-date")[0]
-    except IndexError:
-        knot = None
+def home(request, template_name="home.html.django"):
+    knots = Knot.objects.filter(published=True).order_by("-date")
     return render_to_response(template_name, {
-        "knot": knot,
+        "knots": knots,
         }, context_instance=RequestContext(request))
 
 #display all knots
@@ -35,8 +32,6 @@ def tapestry(request, template_name="tapestry.html.django"):
         "knots": knots
         }, context_instance=RequestContext(request))
 
-
-
 #display this particular knot
 def display_knot(request, knot_slug, template_name="knot.html.django"):
     if request.user.is_staff:
@@ -54,16 +49,3 @@ def display_knot_short(request, knot_short):
     slug = get_object_or_404(Knot, short_url = knot_short).slug
     return HttpResponseRedirect(reverse('poll_results', args=(slug,)))
 
-
-
-
-
-def display_author(request, author_username, template_name="author.html.django"):
-    return render_to_response(template_name, {
-        "author": get_object_or_404(User, username=author_username)
-        }, context_instance=RequestContext(request))
-
-
-def toggle_mobile(request):
-    request.session['is_mobile'] = not request.session.get('is_mobile', True)
-    return HttpResponseRedirect(request.META.get('HTTP_REFERER', reverse('home')))

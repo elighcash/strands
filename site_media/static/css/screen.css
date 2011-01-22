@@ -1,10 +1,15 @@
 html { background: #dddddd; }
 
-body { background: white; width: 960px; margin: 0 auto; min-height: 100%; }
+body { background: white; font-family: Caslon, "Adobe Caslon Pro", "Times New Roman", serif; margin: 0 auto; min-height: 100%; width: 960px; }
 
-a { color: red; }
-a:hover { color: white; background-color: red; }
+a { color: red; text-decoration: none; }
+a:hover { text-decoration: underline; }
 
-#nav { background-color: #cccccc; padding: 0.25em 1em; }
+#nav { background-color: black; font-family: Lucida Grande, Verdana, sans-serif; padding: 20px; width: 920px; }
 #nav a { font-size: 1.5em; margin-right: 0.25em; }
-#nav #mobile { background-image: url(/site_media/static/images/mobile.png); background-position: center top; width: 20px; height: 34px; margin-top: 5px; margin-right: 5px; display: inline-block; float: right; }
+#nav #badge { float: right; }
+#nav #badge:hover { background-color: transparent; }
+
+#content { padding: 20px; }
+
+.sidebar { float: left; padding: 0 20px 20px 0; width: 100px; }

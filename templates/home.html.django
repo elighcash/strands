@@ -3,6 +3,10 @@
 {% block meta_description %}A content management system powered by Django.{% endblock meta_description %}
 
 {% block body %}
-    <a href="{% url display_knot knot.slug %}">{{ knot.title }}</a>
-    {{ knot.blurb }}
+<ul>
+    {% for knot in knots|slice:":3" %}
+        <li><a href="{% url display_knot knot.slug %}">{{ knot.title }}</a>
+        {{ knot.blurb }}</li>
+    {% endfor %}
+</ul>
 {% endblock %}

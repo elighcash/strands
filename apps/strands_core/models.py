@@ -47,7 +47,7 @@ class Knot(models.Model):
     """
     The post object. Has various data associated with it, including references to one or more authors, exactly two strands, one or more locations, and a license. Also includes settings and other metadata, like notes.
     """
-    authors = models.ManyToManyField(Profile, related_name="author_knots", help_text="Authors of post.")
+    authors = models.ManyToManyField(Profile, related_name="knots", help_text="Authors of post.")
 
     title = models.CharField(max_length=44, help_text="Post title.")
     tagline = models.CharField(max_length=160, blank=True, help_text="Post tagline, a short, catchy sentence.")
@@ -74,7 +74,7 @@ class Knot(models.Model):
         if not self.slug:
             slug = defaultfilters.slugify( self.title )
             try:
-                existing = Knot.objects.filter(slug=slug)
+                Knot.objects.get(slug=slug)
             except Knot.DoesNotExist:
                 self.slug=slug
         while not self.short_url:
