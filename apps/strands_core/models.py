@@ -1,24 +1,17 @@
 from django.db import models
-from django.contrib.auth.models import User
 from django.template import defaultfilters
 from django.conf import settings
 
+from license.models import License
 from location.models import Location
+from profile.models import Profile
 
-import random, string, math
-import os.path
+
 
 
 RESERVED_WORDS = ('about', 'admin', 'knot', 'manage', 'strands', 'author')
 
-def get_media_upload_to(instance, filename):
-    return os.path.join(settings.MEDIA_ROOT, 'uploads', instance.knot.slug, filename)
-
-def random_alphanumeric(count):
-    return [random.choice(string.letters + string.digits) for i in range(count)]
-
-
-
+from utils import *
 
 
 # CORE CONTENT
@@ -54,14 +47,15 @@ class Knot(models.Model):
     """
     The post object. Has various data associated with it, including references to one or more authors, exactly two strands, one or more locations, and a license. Also includes settings and other metadata, like notes.
     """
-    authors = models.ManyToManyField(User, related_name="author_knots", help_text="Authors of post.")
+    authors = models.ManyToManyField(Profile, related_name="author_knots", help_text="Authors of post.")
 
     title = models.CharField(max_length=44, help_text="Post title.")
     tagline = models.CharField(max_length=160, blank=True, help_text="Post tagline, a short, catchy sentence.")
     blurb = models.CharField(max_length=250, blank=True, help_text="Post blurb, a quick overview.")
+    thumbnail = models.FileField(upload_to=get_media_upload_to, blank=True, help_text="Thumbnail for post.")
 
     slug = models.SlugField(blank=True, unique=True, help_text="Post slug (auto generated).")
-    short_url = models.CharField(max_length=100, blank=True, help_text="Short link for sharing.")
+    short_url = models.CharField(max_length=100, blank=True, unique=True, help_text="Short link for sharing.")
 
     date = models.DateTimeField(help_text="Date published.")
     strand_a = models.ForeignKey(Strand, related_name='strand_a')
@@ -80,12 +74,9 @@ class Knot(models.Model):
         if not self.slug:
             slug = defaultfilters.slugify( self.title )
             try:
-                existing = Knot.objects.get(slug=slug)
+                existing = Knot.objects.filter(slug=slug)
             except Knot.DoesNotExist:
-                pass
-            else:
-                slug = '%s-%s' % (slug, (existing.count() + 1))
-            self.slug=slug
+                self.slug=slug
         while not self.short_url:
             count = Knot.objects.count()
             if count < 1:
@@ -106,7 +97,21 @@ class Knot(models.Model):
     get_absolute_url = models.permalink(get_absolute_url)
 
     def get_share_url(self):
-        return 'http://localhost:8000' + self.get_absolute_url()
+        manager = Manager.objects.all()[0]
+        domain = manager.short_url_domain if manager.short_url_domain else 'localhost:8000'
+        path = '/' + self.short_url if self.short_url else self.get_absolute_url()
+        return 'http://' + domain + path
+
+    def style_css(self):
+        style = simplejson.loads(self.style)
+        css = ''
+        #add in @font-face rules as necessary
+        for selector in style['rules']:
+            css = css + '#k' + str(self.id) + ' ' + selector + ' {'
+            for property in style['rules'][selector]:
+                css = css + ' ' + property + ': ' + style['rules'][selector][property] + '; '
+            css = css + '} '
+        return css
 
 
 

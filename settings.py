@@ -17,12 +17,12 @@ MANAGERS = ADMINS
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',             # Add 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
-        'NAME': os.path.join(PROJECT_ROOT, 'strands_site.db'),   # Or path to database file if using sqlite3.
-        'USER': '',             # Not used with sqlite3.
-        'PASSWORD': '',         # Not used with sqlite3.
-        'HOST': '',             # Set to empty string for localhost. Not used with sqlite3.
-        'PORT': '',             # Set to empty string for default. Not used with sqlite3.
+        'ENGINE'    : 'django.db.backends.sqlite3',                     # Add 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
+        'NAME'      : os.path.join(PROJECT_ROOT, 'strands_site.db'),    # Or path to database file if using sqlite3.
+        'USER'      : '',                                               # Not used with sqlite3.
+        'PASSWORD'  : '',                                               # Not used with sqlite3.
+        'HOST'      : '',                                               # Set to empty string for localhost. Not used with sqlite3.
+        'PORT'      : '',                                               # Set to empty string for default. Not used with sqlite3.
     }
 }
 
@@ -34,8 +34,8 @@ SITE_ID = 1
 USE_I18N = False
 USE_L10N = False
 
-MEDIA_ROOT = os.path.join(PROJECT_ROOT, 'site_media', 'media')
-MEDIA_URL = '/site_media/media/'
+MEDIA_ROOT = os.path.join(PROJECT_ROOT, 'site_media')
+MEDIA_URL = '/site_media/'
 
 STATIC_ROOT = os.path.join(PROJECT_ROOT, 'site_media', 'static')
 STATIC_URL = '/site_media/static/'
@@ -84,6 +84,9 @@ INSTALLED_APPS = (
     
     'staticfiles',
     
-    'location',
     'strands_core',
+    'location',
+    'license',
+    'attachment',
+    'profile',
 )

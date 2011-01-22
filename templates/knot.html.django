@@ -9,7 +9,7 @@
     width:100%;
 }
 {% else %}
-{{ style|safe }}
+{{ knot.style_css }}
 {% endif %}
 </style>
 

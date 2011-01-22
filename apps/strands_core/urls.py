@@ -5,9 +5,11 @@ from django.views.generic.simple import direct_to_template
 from views import *
 from feeds import *
 
-feeds = {'latest.xml': latest_knots,
-        'author.xml': author_feed,
-        'all.xml': all_knots}
+feeds = {
+    'latest.xml': latest_knots,
+    'author.xml': author_feed,
+    'all.xml'   : all_knots
+}
 
 urlpatterns = patterns('',
     #index url

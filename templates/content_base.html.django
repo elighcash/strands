@@ -7,11 +7,6 @@
 {% endblock %}
 
 {% block body%}
-    <div id="content">
-        {% block content %}
-        {% endblock %}
-    </div>
-    
     <div id="nav-banner">
         <div id="nav">
             <a href="{% url home %}" id="button-home" class="menu-button" title="" >home</a>
@@ -24,11 +19,11 @@
             {% endif %}
             <a href="http://typeish.net/strands/" id="badge"><img src="{{ STATIC_URL }}images/strands_badge.png" title="Built using the STRANDS content management system" alt="woven with STRANDS" /></a>
 
-            {% if user.is_authenticated %}
-            <a href="{% url manage %}" class="menu-button" id="button-manage">manage</a>
-            <a href="{% url edit_profile %}" class="menu-button" id="button-profile">profile</a>
-            {% endif %}
         </div>
+    </div>
+    <div id="content">
+        {% block content %}
+        {% endblock %}
     </div>
     {% block extra_content %}
     {% endblock %}

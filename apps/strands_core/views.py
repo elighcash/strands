@@ -39,15 +39,13 @@ def tapestry(request, template_name="tapestry.html.django"):
 
 #display this particular knot
 def display_knot(request, knot_slug, template_name="knot.html.django"):
-    knot = get_object_or_404(Knot, slug=knot_slug, published=True)
-
-    if knot.style:
-        style = render_knot_css(knot.style, knot.id)
+    if request.user.is_staff:
+        knot = get_object_or_404(Knot, slug=knot_slug)
     else:
-        style = None
+        knot = get_object_or_404(Knot, slug=knot_slug, published=True)
+
     return render_to_response(template_name, {
         "knot": knot,
-        "style": style
         }, context_instance=RequestContext(request))
 
 
@@ -57,17 +55,7 @@ def display_knot_short(request, knot_short):
     return HttpResponseRedirect(reverse('poll_results', args=(slug,)))
 
 
-#helper
-def render_knot_css(style, id):
-    style = simplejson.loads(style)
-    response = ''
-    #add in @font-face rules as necessary
-    for selector in style['rules']:
-        response = response + '#k' + str(id) + ' ' + selector + ' {'
-        for property in style['rules'][selector]:
-            response = response + ' ' + property + ': ' + style['rules'][selector][property] + '; '
-        response = response + '} '
-    return response
+
 
 
 def display_author(request, author_username, template_name="author.html.django"):

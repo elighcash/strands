@@ -2,6 +2,7 @@ from django.db import models
 
 from strands_core.models import Knot
 
+from utils import get_media_upload_to
 
 class Attachment(models.Model):
     """

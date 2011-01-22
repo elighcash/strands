@@ -1,5 +1,6 @@
-from django.db import models
 from django.contrib.auth.models import User
+from django.db import models
+from django.template.defaultfilters import slugify
 
 from location.models import Location
 
@@ -18,9 +19,18 @@ class Profile(models.Model):
     url = models.URLField(blank=True, help_text="Author URL.")
     location = models.ForeignKey(Location, null=True, blank=True, help_text="Author location.")
     twitter_name = models.CharField(blank=True, max_length=15, help_text="Author Twitter screen name (no @).")
+    name = models.CharField(blank=True, max_length=100, help_text="")
+    slug = models.CharField(blank=True, max_length=100, help_text="")
 
     def __unicode__(self):
         return u'%s' % self.user.username
 
     def save(self):
-        super( AuthorProfile, self ).save()
+        if not self.slug:
+            slug = slugify( self.name )
+            print slug
+            try:
+                existing = Profile.objects.get(slug=slug)
+            except Profile.DoesNotExist:
+                self.slug=slug
+        super( Profile, self ).save()

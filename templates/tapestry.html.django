@@ -1,4 +1,4 @@
-{% extends "content_base.html.django" %}
+{% extends "base.html.django" %}
 
 {% block content_title %}Tapestry{% endblock %}
 
