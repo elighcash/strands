@@ -3,13 +3,12 @@
 {% block title %}About{% endblock title %}
 
 {% block body %}
-{% with author.profile as profile %}
     <div class="author-bio">
-        <img class="author-image" src="{{ profile.image.url }}">
-        <h2 class="author-name">{{ author.first_name }} {{ author.last_name }}</h2>{% if profile.location %}<span class="author-location">{{ profile.location.city }}, {{ profile.location.region }}</span>{% endif %}
-        <p>{{ profile.bio|safe }}</p>
-        {% if profile.url %}<p>On the Web: <a href="{{ profile.url }}" target="_blank">{{ profile.url }}</a></p>{% endif %}
-        {% if profile.twitter_name %}<p>On Twitter: <a href="http://twitter.com/{{ profile.twitter_name }}" target="_blank">@{{ profile.twitter_name }}</a></p>{% endif %}
+        {% if author.image %}<img class="author-image" src="{{ author.image.url }}">{% endif %}
+        <h2 class="author-name">{{ author.name }}</h2>{% if author.location %}<span class="author-location">{{ author.location.city }}, {{ author.location.region }}</span>{% endif %}
+        <p>{{ author.bio|linebreaksbr }}</p>
+        {% if author.url %}<p>On the Web: <a href="{{ author.url }}" target="_blank">{{ author.url }}</a></p>{% endif %}
+        {% if author.twitter_name %}<p>On Twitter: <a href="http://twitter.com/{{ author.twitter_name }}" target="_blank">@{{ author.twitter_name }}</a></p>{% endif %}
 
     </div>
     <ul class="author-knot-list">
@@ -38,7 +37,6 @@
         </li>
     {% endfor %}
     </ul>
-{% endwith %}
 {% endblock body%}
 
 {% block extra_body %}

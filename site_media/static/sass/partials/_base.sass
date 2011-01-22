@@ -1,0 +1,61 @@
+$default_border_radius: 8px
+$default_box_shadow_h_offset: 0px
+$default_box_shadow_v_offset: 0px
+$default_box_shadow_blur: 4px
+
+@import "compass/css3"
+@import "compass/utilities"
+
+$eao_beige: #e6e4dd
+$eao_highlight: #fbf5f5
+$eao_grey: gray
+$eao_red: #750000
+$eao_dark_grey: #292929
+$background_color: $eao_beige
+$content_fill: white
+$text_color: black
+$eao_dark_red: #550000
+
+$medium_grey: #7d7d7d
+$link_color: #c1272d
+
+$sans_serif: unquote("'Droid Sans', Corbel, 'Trebuchet MS', sans-serif")
+$serif: unquote("'Droid Serif', Libertine, Constantia, 'Times New Roman', serif")
+
+=ts
+    text-shadow: rgba(100, 100, 100, 0.1) 0px 1px 0px
+
+body
+    background-color: $background_color
+    background-image: url(/site_media/static/images/background.jpg)
+    background-position: center
+    padding: 0
+    margin: 0
+    width: 100%
+    height: 100%
+    font-size: 14px
+    line-height: 18px
+    text-rendering: optimizeLegibility
+    letter-spacing: 0.03em
+    font-family: $serif
+
+a
+    text-decoration: none
+    color: $link_color
+    &:hover
+        background-color: $link_color
+        color: white
+        padding: 0 0.2em
+        margin: 0 -0.2em
+        -webkit-border-radius: 3px
+        -moz-border-radius: 3px
+
+img
+    border: none
+
+h1, h2, h3
+    font-family: $sans_serif
+
+h3
+    margin-top: 0
+    padding-top: 0

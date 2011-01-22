@@ -1,0 +1,76 @@
+body { background-color: #e6e4dd; background-image: url(/site_media/static/images/background.jpg); background-position: center; padding: 0; margin: 0; width: 100%; height: 100%; font-size: 14px; line-height: 18px; text-rendering: optimizeLegibility; letter-spacing: 0.03em; font-family: 'Droid Serif', Libertine, Constantia, 'Times New Roman', serif; }
+
+a { text-decoration: none; color: #c1272d; }
+a:hover { background-color: #c1272d; color: white; padding: 0 0.2em; margin: 0 -0.2em; -webkit-border-radius: 3px; -moz-border-radius: 3px; }
+
+img { border: none; }
+
+h1, h2, h3 { font-family: 'Droid Sans', Corbel, 'Trebuchet MS', sans-serif; }
+
+h3 { margin-top: 0; padding-top: 0; }
+
+#banner { -moz-box-shadow: #000 -6px 2px 6px 0; -webkit-box-shadow: #000 -6px 2px 6px 0; -o-box-shadow: #000 -6px 2px 6px 0; box-shadow: #000 -6px 2px 6px 0; background-color: #750000; width: 100%; height: 150px; position: absolute; top: 20px; font-family: 'Droid Sans', Corbel, 'Trebuchet MS', sans-serif; }
+#banner h1 { font-size: 1px; color: transparent; background-image: url(/site_media/static/images/ends_odds_mobile.png); background-repeat: no-repeat; background-position: center; width: 320px; height: 115px; margin: 0 auto; }
+#banner #index-nav { margin: 0 auto; position: relative; -moz-box-shadow: none; -webkit-box-shadow: none; text-align: center; }
+#banner #index-nav a { font-size: 30px; font-weight: bold; color: white; padding: 0; margin: 0 10px; text-shadow: 0px 0px 4px rgba(0, 0, 0, 0.8); }
+#banner #index-nav a:hover { text-shadow: 0px 0px 4px rgba(255, 255, 255, 0.8); background-color: transparent; color: white; padding: 0; margin: 0 10px; -webkit-border-radius: 0px; -moz-border-radius: 0px; }
+#banner #index-nav #strands { top: 122px; }
+#banner #index-nav #about { top: 154px; }
+
+#teaser { text-shadow: rgba(100, 100, 100, 0.1) 0px 1px 0px; -moz-box-shadow: #333333 0px 0px 4px 0; -webkit-box-shadow: #333333 0px 0px 4px 0; -o-box-shadow: #333333 0px 0px 4px 0; box-shadow: #333333 0px 0px 4px 0; width: 85%; height: 250px; margin: 0 auto 16px auto; padding: 180px 10px 10px 10px; background-color: white; font-family: 'Droid Serif', Libertine, Constantia, 'Times New Roman', serif; }
+#teaser #tagline, #teaser #byline { color: #7d7d7d; }
+#teaser #title { font-size: 26px; text-align: center; display: block; line-height: 26px; }
+#teaser #tagline { font-style: italic; font-size: 16px; width: 90%; text-align: center; display: block; margin: 0 auto; padding: 0; }
+#teaser #byline { vertical-align: top; font-size: 14px; text-align: center; margin: 0 auto; padding: 0; width: 90%; display: block; }
+#teaser #byline a { font-variant: small-caps; font-size: 1.2em; margin-bottom: 0.1em; }
+#teaser #blurb { font-size: 14px; display: block; width: 90%; margin: 0 auto; }
+#teaser #blurb a { font-variant: small-caps; float: right; }
+#teaser br { display: none; }
+
+#content { text-shadow: rgba(100, 100, 100, 0.1) 0px 1px 0px; -moz-box-shadow: #333333 0px 0px 4px 0; -webkit-box-shadow: #333333 0px 0px 4px 0; -o-box-shadow: #333333 0px 0px 4px 0; box-shadow: #333333 0px 0px 4px 0; width: 85%; background-color: white; margin: -36px auto 36px auto; padding: 50px 8px 8px 8px; position: relative; min-height: 300px; }
+
+.article { margin-top: 48px; }
+
+#ends-and-odds-logo { padding: 0; margin: 24px auto 0 auto; width: 100%; }
+
+#nav-banner { -moz-box-shadow: #000 -6px 2px 6px 0; -webkit-box-shadow: #000 -6px 2px 6px 0; -o-box-shadow: #000 -6px 2px 6px 0; box-shadow: #000 -6px 2px 6px 0; position: absolute; top: 0px; width: 100%; background-color: #750000; height: 48px; }
+
+#nav { margin: 0 auto; z-index: 3; font-family: 'Droid Sans', Corbel, 'Trebuchet MS', sans-serif; }
+#nav a { display: inline-block; font-size: 24px; font-weight: bold; color: white; text-shadow: 0px 0px 4px rgba(0, 0, 0, 0.8); margin: 4px; vertical-align: middle; }
+#nav a:hover { text-shadow: 0px 0px 4px rgba(255, 255, 255, 0.8); background-color: transparent; color: white; padding: 0; margin: 4px; -webkit-border-radius: 0px; -moz-border-radius: 0px; }
+#nav #button-manage, #nav #button-profile, #nav #badge, #nav #mobile { float: right; }
+#nav #button-manage, #nav #button-profile { margin-top: 12px; }
+#nav #badge { display: none; margin-top: 8px; margin-right: 5px; }
+#nav #ampersand { background-image: url(/site_media/static/images/ampersand.png); background-position: center top; width: 42px; height: 38px; margin-left: 20px; }
+#nav #ampersand:hover { background-position: center bottom; }
+#nav #mobile-control { vertical-align: middle; float: right; margin-right: 18px; margin-top: 4px; }
+
+#twitter_update_list { list-style: disc; padding-left: 1em; }
+
+#info, #attachment { background-repeat: no-repeat; background-position: top right; }
+
+#info { background-image: url(/site_media/static/images/sidebar-info.png); }
+
+#attachment { background-image: url(/site_media/static/images/sidebar-attachment.png); text-align: left; }
+
+#tapestry, .author-knot-list { margin-top: 50px; margin-left: 10px; padding-left: 10px; }
+#tapestry li, .author-knot-list li { font-size: 20px; line-height: 22px; padding: 10px 0; margin-bottom: 10px; border-bottom: 1px solid #cccccc; }
+#tapestry .tagline, .author-knot-list .tagline { font-style: italic; font-size: 16px; line-height: 18px; display: block; color: #b0b0b0; }
+#tapestry .byline, .author-knot-list .byline { vertical-align: top; font-size: 14px; line-height: 16px; text-align: left; margin: 0 auto; padding: 0; display: block; color: #b0b0b0; text-align: right; }
+#tapestry .byline a, .author-knot-list .byline a { font-variant: small-caps; font-size: 1.2em; margin-bottom: 0.1em; }
+#tapestry .blurb, .author-knot-list .blurb { font-size: 14px; line-height: 16px; display: block; margin: 0 auto; text-align: left; }
+#tapestry .blurb a, .author-knot-list .blurb a { font-variant: small-caps; float: right; }
+
+#knots-info, #hover-meta { -moz-box-shadow: #333333 0px 0px 4px 0; -webkit-box-shadow: #333333 0px 0px 4px 0; -o-box-shadow: #333333 0px 0px 4px 0; box-shadow: #333333 0px 0px 4px 0; -moz-border-radius: 8px; -webkit-border-radius: 8px; -o-border-radius: 8px; -ms-border-radius: 8px; -khtml-border-radius: 8px; border-radius: 8px; display: none; position: absolute; width: 260px; background: rgba(0, 0, 0, 0.6); color: white; border: 1px solid black; }
+
+#hover-meta { -moz-box-shadow: #333333 0px 0px 4px 0; -webkit-box-shadow: #333333 0px 0px 4px 0; -o-box-shadow: #333333 0px 0px 4px 0; box-shadow: #333333 0px 0px 4px 0; top: 48px; right: 19px; text-align: right; padding: 10px; }
+#hover-meta #title { font-size: 20px; text-align: left; display: block; }
+#hover-meta #tagline { font-style: italic; font-size: 16px; line-height: 18px; text-align: left; display: block; margin: 0 auto; padding: 0; color: #b0b0b0; }
+#hover-meta #byline { vertical-align: top; font-size: 14px; line-height: 16px; text-align: left; margin: 0 auto; padding: 0; display: block; color: #b0b0b0; }
+#hover-meta #byline a { font-variant: small-caps; font-size: 1.2em; margin-bottom: 0.1em; }
+#hover-meta #blurb { font-size: 14px; line-height: 16px; display: block; margin: 0 auto; text-align: left; }
+#hover-meta #blurb a { font-variant: small-caps; float: right; }
+
+.control { font-variant: all-caps; color: white; font-weight: bold; font-size: 20px; font-family: 'Droid Sans', Corbel, 'Trebuchet MS', sans-serif; border-top: 1px solid #cccccc; width: 260px; display: block; padding: 5px 0; }
+.control:hover { padding: 5px 0; margin: 0; }
+.control img { vertical-align: top; }

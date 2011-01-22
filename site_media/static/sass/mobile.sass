@@ -1,0 +1,298 @@
+@import partials/base.sass
+
+//INDEX ELEMENTS
+//-----------------
+#banner
+    +box-shadow(unquote("#000"), unquote("-6px"), unquote("2px"), unquote("6px"))
+    //+h-gradient(!eao_red, !eao_dark_red)
+    background-color: $eao_red
+    width: 100%
+    height: 150px
+    position: absolute
+    top: 20px
+    //:margin -200px 0
+    font-family: $sans_serif
+    h1
+        font-size: 1px
+        color: transparent
+        background-image: url(/site_media/static/images/ends_odds_mobile.png)
+        background-repeat: no-repeat
+        background-position: center
+        width: 320px
+        height: 115px
+        margin: 0 auto
+    #index-nav
+        margin: 0 auto
+        //:width 744px
+        position: relative
+        -moz-box-shadow: none
+        -webkit-box-shadow: none
+        text-align: center
+        a
+            //:display block
+            font-size: 30px
+            font-weight: bold
+            //:position absolute
+            //:left 640px
+            color: white
+            padding: 0
+            margin: 0 10px
+            text-shadow: 0px 0px 4px rgba(0, 0, 0, 0.8)
+            &:hover
+                text-shadow: 0px 0px 4px rgba(255, 255, 255, 0.8)
+                background-color: transparent
+                color: white
+                padding: 0
+                margin: 0 10px
+                -webkit-border-radius: 0px
+                -moz-border-radius: 0px
+        #strands
+            top: 122px
+        #about
+            top: 154px
+
+#teaser
+    +ts
+    +box-shadow
+    width: 85%
+    height: 250px
+    margin: 0 auto 16px auto
+    padding: 180px 10px 10px 10px
+    background-color: $content_fill
+    font-family: $serif
+    #tagline, #byline
+        color: $medium_grey
+    #title
+        font-size: 26px
+        text-align: center
+        //:max-width 350px
+        display: block
+        line-height: 26px
+    #tagline
+        font-style: italic
+        font-size: 16px
+        width: 90%
+        text-align: center
+        display: block
+        margin: 0 auto
+        padding: 0
+    #byline
+        vertical-align: top
+        font-size: 14px
+        text-align: center
+        margin: 0 auto
+        padding: 0
+        width: 90%
+        display: block
+        a
+            font-variant: small-caps
+            font-size: 1.2em
+            margin-bottom: 0.1em
+    #blurb
+        font-size: 14px
+        display: block
+        width: 90%
+        margin: 0 auto
+        a
+            font-variant: small-caps
+            float: right
+    br
+        display: none
+
+//-----------------
+
+//CONTENT ELEMENTS
+//-----------------
+
+#content
+    +ts
+    +box-shadow
+    width: 85%
+    background-color: white
+    margin: -36px auto 36px auto
+    padding: 50px 8px 8px 8px
+    position: relative
+    min-height: 300px
+
+.article
+    margin-top: 48px
+
+#ends-and-odds-logo
+    padding: 0
+    margin: 24px auto 0 auto
+    width: 100%
+
+#nav-banner
+    +box-shadow(unquote("#000"), unquote("-6px"), unquote("2px"), unquote("6px"))
+    position: absolute
+    top: 0px
+    width: 100%
+    background-color: $eao_red
+    height: 48px
+    //:min-width 1008px
+
+#nav
+    //:width 1008px
+    margin: 0 auto
+    z-index: 3
+    font-family: $sans_serif
+    a
+        display: inline-block
+        font-size: 24px
+        font-weight: bold
+        color: white
+        text-shadow: 0px 0px 4px rgba(0, 0, 0, 0.8)
+        margin: 4px
+        vertical-align: middle
+        &:hover
+            text-shadow: 0px 0px 4px rgba(255, 255, 255, 0.8)
+            background-color: transparent
+            color: white
+            padding: 0
+            margin: 4px
+            -webkit-border-radius: 0px
+            -moz-border-radius: 0px
+    #button-manage, #button-profile, #badge, #mobile
+        float: right
+    #button-manage, #button-profile
+        margin-top: 12px
+    #badge
+        display: none
+        margin-top: 8px
+        margin-right: 5px
+    #ampersand
+        background-image: url(/site_media/static/images/ampersand.png)
+        background-position: center top
+        width: 42px
+        height: 38px
+        margin-left: 20px
+        &:hover
+            background-position: center bottom
+    #mobile-control
+        vertical-align: middle
+        float: right
+        margin-right: 18px
+        margin-top: 4px
+
+#twitter_update_list
+    list-style: disc
+    padding-left: 1em
+
+#info, #attachment
+    background-repeat: no-repeat
+    background-position: top right
+
+#info
+    background-image: url(/site_media/static/images/sidebar-info.png)
+
+#attachment
+    background-image: url(/site_media/static/images/sidebar-attachment.png)
+    text-align: left
+
+#tapestry, .author-knot-list
+    margin-top: 50px
+    margin-left: 10px
+    padding-left: 10px
+    li
+        font-size: 20px
+        line-height: 22px
+        padding: 10px 0
+        margin-bottom: 10px
+        border-bottom: 1px solid #cccccc
+    .tagline
+        font-style: italic
+        font-size: 16px
+        line-height: 18px
+        display: block
+        color: $medium_grey + #333333
+    .byline
+        vertical-align: top
+        font-size: 14px
+        line-height: 16px
+        text-align: left
+        margin: 0 auto
+        padding: 0
+        display: block
+        color: $medium_grey + #333333
+        text-align: right
+        a
+            font-variant: small-caps
+            font-size: 1.2em
+            margin-bottom: 0.1em
+    .blurb
+        font-size: 14px
+        line-height: 16px
+        display: block
+        margin: 0 auto
+        text-align: left
+        a
+            font-variant: small-caps
+            float: right
+
+#knots-info, #hover-meta
+    +box-shadow
+    +border-radius
+    display: none
+    position: absolute
+    width: 260px
+    background: rgba(0, 0, 0, 0.6)
+    color: white
+    border: 1px solid black
+
+#hover-meta
+    +box-shadow
+    top: 48px
+    right: 19px
+    text-align: right
+    padding: 10px
+    #title
+        font-size: 20px
+        text-align: left
+        display: block
+    #tagline
+        font-style: italic
+        font-size: 16px
+        line-height: 18px
+        text-align: left
+        display: block
+        margin: 0 auto
+        padding: 0
+        color: $medium_grey + #333333
+    #byline
+        vertical-align: top
+        font-size: 14px
+        line-height: 16px
+        text-align: left
+        margin: 0 auto
+        padding: 0
+        display: block
+        color: $medium_grey + #333333
+        a
+            font-variant: small-caps
+            font-size: 1.2em
+            margin-bottom: 0.1em
+    #blurb
+        font-size: 14px
+        line-height: 16px
+        display: block
+        margin: 0 auto
+        text-align: left
+        a
+            font-variant: small-caps
+            float: right
+
+.control
+    font-variant: all-caps
+    color: white
+    font-weight: bold
+    font-size: 20px
+    font-family: $sans_serif
+    border-top: 1px solid #cccccc
+    width: 260px
+    display: block
+    padding: 5px 0
+    &:hover
+        padding: 5px 0
+        margin: 0
+    img
+        vertical-align: top
